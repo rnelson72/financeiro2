@@ -1,54 +1,17 @@
 <?php
 $path = $_GET['path'] ?? '';
-session_start();
+require_once '../config/database.php';
 
 switch ($path) {
-    case 'usuarios_novo':
-        include '../views/usuarios/form.php';
-        break;
-    case 'usuarios_salvar':
-        require_once '../controllers/UsuariosController.php';
-        salvar_usuarios($pdo);
-        break;
-    case 'bancos_novo':
-        include '../views/bancos/form.php';
-        break;
-    case 'bancos_salvar':
-        require_once '../controllers/BancosController.php';
-        salvar_bancos($pdo);
-        break;
-    case 'contas_contabeis_novo':
-        include '../views/contas_contabeis/form.php';
-        break;
-    case 'contas_contabeis_salvar':
-        require_once '../controllers/Contas_contabeisController.php';
-        salvar_contas_contabeis($pdo);
-        break;
-    case 'cartoes_credito_novo':
-        include '../views/cartoes_credito/form.php';
-        break;
-    case 'cartoes_credito_salvar':
-        require_once '../controllers/Cartoes_creditoController.php';
-        salvar_cartoes_credito($pdo);
-        break;
-    case 'usuarios':
-        require_once '../controllers/UsuariosController.php';
-        listar_usuarios($pdo);
-        break;
-    case 'bancos':
-        require_once '../controllers/BancosController.php';
-        listar_bancos($pdo);
-        break;
-    case 'contas_contabeis':
-        require_once '../controllers/Contas_contabeisController.php';
-        listar_contas_contabeis($pdo);
-        break;
-    case 'cartoes_credito':
-        require_once '../controllers/Cartoes_creditoController.php';
-        listar_cartoes_credito($pdo);
-        break;
-    default:
-        echo '<h1>Sistema PHP em construção...</h1>';
-        break;
+    case 'controles': require_once '../controllers/ControleController.php'; listar_controles($pdo); break;
+    case 'controle_novo': require_once '../controllers/ControleController.php'; novo_controle($pdo); break;
+    case 'controle_editar': require_once '../controllers/ControleController.php'; editar_controle($pdo); break;
+    case 'controle_salvar': require_once '../controllers/ControleController.php'; salvar_controle($pdo); break;
+    default: echo '<h1>Sistema de Controle</h1>'; break;
 }
 ?>
+    case 'controle_lancamentos': require_once '../controllers/ControleController.php'; lancamentos_por_controle($pdo); break;
+    case 'controle_novo_lancamento': require_once '../controllers/ControleController.php'; novo_lancamento($pdo); break;
+    case 'controle_editar_lancamento': require_once '../controllers/ControleController.php'; editar_lancamento($pdo); break;
+    case 'controle_salvar_lancamento': require_once '../controllers/ControleController.php'; salvar_lancamento($pdo); break;
+    case 'controle_excluir_lancamento': require_once '../controllers/ControleController.php'; excluir_lancamento($pdo); break;
