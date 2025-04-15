@@ -27,6 +27,14 @@ function editar_controle($pdo) {
     include __DIR__ . '/../views/layout.php';
 }
 
+function excluir_controle($pdo) {
+    $id = $_GET['id'];
+    $stmt = $pdo->prepare("DELETE FROM controle WHERE id = ?");
+    $stmt->execute([$id]);
+    header("Location: ?path=controles");
+    exit;
+}
+
 function salvar_controle($pdo) {
     $id = $_POST['id'] ?? '';
     $descricao = $_POST['descricao'] ?? '';

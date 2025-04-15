@@ -17,6 +17,11 @@ switch ($path) {
         require_once '../controllers/ControleController.php'; 
         editar_controle($pdo); 
         break;
+        
+    case 'controle_excluir': 
+        require_once '../controllers/ControleController.php'; 
+        excluir_controle($pdo); 
+        break;
 
     case 'controle_salvar': 
         require_once '../controllers/ControleController.php'; 
