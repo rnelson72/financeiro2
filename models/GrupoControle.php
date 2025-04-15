@@ -8,7 +8,7 @@ class GrupoControle {
     }
 
     public function listarTodos() {
-        $stmt = $this->pdo->query("SELECT * FROM grupo_controle WHERE ativo = 1 ORDER BY nome");
+        $stmt = $this->pdo->query("SELECT * FROM grupo_controle WHERE ativo = 1 ORDER BY descricao");
         return $stmt->fetchAll();
     }
 }

@@ -7,9 +7,11 @@ function listar_controles($pdo) {
     $controleModel = new Controle($pdo);
     $grupos = $grupoModel->listarTodos();
     $controles = $controleModel->listarTodosComSaldo();
-    include '../views/controle/index.php';
-}
 
+    $titulo = "Consulta de Controles";
+    $conteudo = __DIR__ . '/../views/controle/index.php';
+    include __DIR__ . '/../views/layout.php';
+}
 
 function editar_controle($pdo) {
     $id = $_GET['id'] ?? null;
@@ -19,7 +21,10 @@ function editar_controle($pdo) {
 
     $grupoModel = new GrupoControle($pdo);
     $grupos = $grupoModel->listarTodos();
-    include '../views/controle/form.php';
+
+    $titulo = "Editar Controle";
+    $conteudo = __DIR__ . '/../views/controle/form.php';
+    include __DIR__ . '/../views/layout.php';
 }
 
 function salvar_controle($pdo) {
@@ -50,9 +55,11 @@ function novo_controle($pdo) {
     $registro = [];
     $grupoModel = new GrupoControle($pdo);
     $grupos = $grupoModel->listarTodos();
-    include '../views/controle/form.php';
-}
 
+    $titulo = "Novo Controle";
+    $conteudo = __DIR__ . '/../views/controle/form.php';
+    include __DIR__ . '/../views/layout.php';
+}
 
 function lancamentos_por_controle($pdo) {
     $id = $_GET['id'];
@@ -64,12 +71,18 @@ function lancamentos_por_controle($pdo) {
     $stmt->execute([$id]);
     $lancamentos = $stmt->fetchAll();
 
-    include '../views/controle/lancamentos.php';
+    $titulo = "Lançamentos do Controle";
+    $conteudo = __DIR__ . '/../views/controle/lancamentos.php';
+    include __DIR__ . '/../views/layout.php';
 }
+
 
 function novo_lancamento($pdo) {
     $registro = [];
-    include '../views/controle/form_lancamento.php';
+
+    $titulo = "Novo Lançamento";
+    $conteudo = __DIR__ . '/../views/controle/form_lancamento.php';
+    include __DIR__ . '/../views/layout.php';
 }
 
 function editar_lancamento($pdo) {
@@ -77,7 +90,10 @@ function editar_lancamento($pdo) {
     $stmt = $pdo->prepare("SELECT * FROM lancamentos WHERE id = ?");
     $stmt->execute([$id]);
     $registro = $stmt->fetch();
-    include '../views/controle/form_lancamento.php';
+
+    $titulo = "Editar Lançamento";
+    $conteudo = __DIR__ . '/../views/controle/form_lancamento.php';
+    include __DIR__ . '/../views/layout.php';
 }
 
 function salvar_lancamento($pdo) {
