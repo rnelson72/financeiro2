@@ -2,16 +2,63 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Sistema PHP</title>
+    <title>Bancos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
 </head>
 <body class="container mt-4">
-<h2>Bancos</h2>
-<a href='?path=bancos_novo' class='btn btn-primary mb-3'>Novo</a>
-<table class='table table-striped'><thead><tr><th>ID</th><th>Descrição</th><th>Ações</th></tr></thead><tbody>
-<?php foreach ($bancos as $item): ?>
-<tr><td><?= $item['id'] ?></td><td><?= htmlspecialchars($item['descricao'] ?? $item['nome'] ?? '') ?></td><td><a href='?path=bancos_editar&id=<?= $item['id'] ?>' class='btn btn-warning btn-sm'>Editar</a> <a href='?path=bancos_excluir&id=<?= $item['id'] ?>' class='btn btn-danger btn-sm' onclick='return confirm("Confirma exclusão?")'>Excluir</a></td></tr><?php endforeach; ?>
-</tbody></table>
+
+<h2 class="mb-4">Cadastro de Bancos</h2>
+
+<a href='?path=banco_novo' class='btn btn-primary mb-3'>Novo Banco</a>
+
+<table id="tabela-bancos" class="table table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Descrição</th>
+            <th>Número</th>
+            <th>Conta</th>
+            <th>Titular</th>
+            <th>PIX</th>
+            <th>Ativo</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($bancos as $item): ?>
+            <tr>
+                <td><?= $item['id'] ?></td>
+                <td><?= htmlspecialchars($item['descricao']) ?></td>
+                <td><?= htmlspecialchars($item['numero']) ?></td>
+                <td><?= htmlspecialchars($item['conta']) ?></td>
+                <td><?= htmlspecialchars($item['titular']) ?></td>
+                <td><?= htmlspecialchars($item['pix']) ?></td>
+                <td><?= $item['ativo'] ? 'Sim' : 'Não' ?></td>
+                <td>
+                    <a href='?path=banco_editar&id=<?= $item['id'] ?>' class='btn btn-sm btn-warning'>Editar</a>
+                    <a href='?path=banco_excluir&id=<?= $item['id'] ?>' class='btn btn-sm btn-danger' onclick='return confirm("Confirma exclusão?")'>Excluir</a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        <!-- jQuery e DataTables JS -->
+        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+
+        <!-- Inicialização -->
+        <script>
+        $(document).ready(function() {
+            $('#tabela-bancos').DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json'
+            }
+            });
+        });
+        </script>
+    </tbody>
+</table>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

@@ -6,46 +6,20 @@ $desagrupados = [];
 $desativados = [];
 
 foreach ($controles as $ctrl) {
-    if ($ctrl['ativo'] == 0) {
+    if (($ctrl['ativo'] == 0) or ($ctrl['ativo'] == '0')) {
         $desativados[] = $ctrl;
         continue;
     }
 
-    if (!empty($ctrl['grupo_id'])) {
-        $controles_por_grupo[$ctrl['grupo_id']][] = $ctrl;
+    if (empty($ctrl['grupo_id'])) {
+      $desagrupados[] = $ctrl;
     } else {
-        $desagrupados[] = $ctrl;
+      $controles_por_grupo[$ctrl['grupo_id']][] = $ctrl;
     }
 }
 ?>
 
 <div class="accordion" id="accordionControles">
-
-  <!-- DESATIVADOS -->
-  <?php if (!empty($desativados)): ?>
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="grupo-desativados">
-      <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-desativados">
-        <span class="fs-5 fw-bold"><i class="bi bi-eye-slash me-2"></i>Controles Desativados</span>
-      </button>
-    </h2>
-    <div id="collapse-desativados" class="accordion-collapse collapse" data-bs-parent="#accordionControles">
-      <div class="accordion-body p-0">
-        <ul class='list-group list-group-flush'>
-          <?php foreach ($desativados as $ctrl): ?>
-          <li class='list-group-item bg-light d-flex justify-content-between align-items-center'>
-            <div><?= htmlspecialchars($ctrl['descricao']) ?></div>
-            <div class="d-flex align-items-center gap-2">
-              <span class='badge bg-secondary'><?= number_format($ctrl['saldo'], 2, ',', '.') ?></span>
-              <a href="?path=controle_editar&id=<?= $ctrl['id'] ?>" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil-square"></i></a>
-            </div>
-          </li>
-          <?php endforeach; ?>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <?php endif; ?>
 
   <!-- DESAGRUPADOS -->
   <?php if (!empty($desagrupados)): ?>
@@ -113,5 +87,31 @@ foreach ($controles as $ctrl) {
     </div>
   </div>
   <?php endforeach; ?>
+
+  <!-- DESATIVADOS -->
+  <?php if (!empty($desativados)): ?>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="grupo-desativados">
+      <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-desativados">
+        <span class="fs-5 fw-bold"><i class="bi bi-eye-slash me-2"></i>Controles Desativados</span>
+      </button>
+    </h2>
+    <div id="collapse-desativados" class="accordion-collapse collapse" data-bs-parent="#accordionControles">
+      <div class="accordion-body p-0">
+        <ul class='list-group list-group-flush'>
+          <?php foreach ($desativados as $ctrl): ?>
+          <li class='list-group-item bg-light d-flex justify-content-between align-items-center'>
+            <div><?= htmlspecialchars($ctrl['descricao']) ?></div>
+            <div class="d-flex align-items-center gap-2">
+              <span class='badge bg-secondary'><?= number_format($ctrl['saldo'], 2, ',', '.') ?></span>
+              <a href="?path=controle_editar&id=<?= $ctrl['id'] ?>" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil-square"></i></a>
+            </div>
+          </li>
+          <?php endforeach; ?>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <?php endif; ?>
 
 </div>

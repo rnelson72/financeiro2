@@ -8,10 +8,15 @@ class Controle {
   }
   
   public function listarTodosComSaldo() {
-      $stmt = $this->pdo->query("SELECT c.*, 
-        (SELECT COALESCE(SUM(valor),0) FROM lancamentos WHERE controle_id = c.id) AS saldo 
-        FROM controle c WHERE c.ativo = 1 ORDER BY c.grupo_id, c.descricao");
-      return $stmt->fetchAll();
+      $stmt = $this->pdo->query("SELECT * FROM vw_controle 
+                                ORDER BY  
+                                CASE WHEN ativo = 1 AND grupo_id IS NULL THEN 0
+                                    WHEN ativo = 1 AND grupo_id IS NOT NULL THEN 1
+                                    ELSE 2
+                                END,
+                                grupo, descricao");
+       -- Ordem: desagrupados ativos, agrupados ativos, desativados
+  return $stmt->fetchAll();
   }
 }
 ?>
