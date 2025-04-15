@@ -6,6 +6,6 @@ try {
 $pdo = new PDO($dsn, getenv('DB_USER'), getenv('DB_PASS'));
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-exit('Erro: ' . $e->getMessage());
+exit('Erro ao conectar: ' . $e->getMessage());
 }
 ?>
