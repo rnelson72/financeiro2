@@ -41,10 +41,16 @@ function salvar_controle($pdo) {
     $grupo_id = $_POST['grupo_id'] ?? null;
     $novo_grupo = trim($_POST['novo_grupo'] ?? '');
 
+    // Se novo grupo foi informado, cria e usa o ID dele
     if ($novo_grupo !== '') {
-        $stmt = $pdo->prepare("INSERT INTO grupo_controle (nome, ativo) VALUES (?, 1)");
+        $stmt = $pdo->prepare("INSERT INTO grupo_controle (descricao, ativo) VALUES (?, 1)");
         $stmt->execute([$novo_grupo]);
         $grupo_id = $pdo->lastInsertId();
+    }
+
+    // Se grupo_id estiver vazio, garante que será NULL no banco
+    if ($grupo_id === '') {
+        $grupo_id = null;
     }
 
     if ($id) {
