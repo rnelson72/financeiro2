@@ -52,8 +52,9 @@ switch ($path) {
         require_once '../controllers/ControleController.php'; 
         excluir_lancamento($pdo); 
         break;
+    case 'grupo_excluir': require_once '../controllers/ControleController.php'; excluir_grupo($pdo); break;
 
-   default: 
+    default: 
         echo '<h1>Sistema de Controle</h1>'; 
         break;
 }

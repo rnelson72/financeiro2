@@ -30,6 +30,14 @@
     <input type="text" name="novo_grupo" class="form-control">
   </div>
 
+  <?php if (!empty($registro['id'])): ?>
+  <div class="form-check mb-3">
+    <input type="checkbox" class="form-check-input" name="ativo" id="ativo"
+          value="1" <?= (!isset($registro['ativo']) || $registro['ativo']) ? 'checked' : '' ?>>
+    <label class="form-check-label" for="ativo">Controle Ativo</label>
+  </div>
+  <?php endif; ?>
+
   <div class="d-flex justify-content-between">
     <a href="?path=controles" class="btn btn-secondary">
       <i class="bi bi-arrow-left"></i> Voltar

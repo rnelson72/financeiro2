@@ -40,6 +40,7 @@ function salvar_controle($pdo) {
     $descricao = $_POST['descricao'] ?? '';
     $grupo_id = $_POST['grupo_id'] ?? null;
     $novo_grupo = trim($_POST['novo_grupo'] ?? '');
+    $ativo = isset($_POST['ativo']) ? 1 : 0;
 
     // Se novo grupo foi informado, cria e usa o ID dele
     if ($novo_grupo !== '') {
@@ -54,11 +55,11 @@ function salvar_controle($pdo) {
     }
 
     if ($id) {
-        $stmt = $pdo->prepare("UPDATE controle SET descricao = ?, grupo_id = ? WHERE id = ?");
-        $stmt->execute([$descricao, $grupo_id, $id]);
+        $stmt = $pdo->prepare("UPDATE controle SET descricao = ?, grupo_id = ?, ativo = ? WHERE id = ?");
+        $stmt->execute([$descricao, $grupo_id, $ativo, $id]);
     } else {
-        $stmt = $pdo->prepare("INSERT INTO controle (descricao, grupo_id, ativo) VALUES (?, ?, 1)");
-        $stmt->execute([$descricao, $grupo_id]);
+        $stmt = $pdo->prepare("INSERT INTO controle (descricao, grupo_id, ativo) VALUES (?, ?, ?)");
+        $stmt->execute([$descricao, $grupo_id, $ativo]);
     }
 
     header('Location: ?path=controles');
@@ -89,7 +90,6 @@ function lancamentos_por_controle($pdo) {
     $conteudo = __DIR__ . '/../views/controle/lancamentos.php';
     include __DIR__ . '/../views/layout.php';
 }
-
 
 function novo_lancamento($pdo) {
     $registro = [];
@@ -137,4 +137,26 @@ function excluir_lancamento($pdo) {
     header("Location: ?path=controle_lancamentos&id=$ctrl");
     exit;
 }
+
+function excluir_grupo($pdo) {
+    $id = $_GET['id'];
+
+    // Confere se existem controles usando este grupo
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM controle WHERE grupo_id = ?");
+    $stmt->execute([$id]);
+    $total = $stmt->fetchColumn();
+
+    if ($total > 0) {
+        // Impede exclusão se ainda houver controles
+        die('Não é possível excluir o grupo: ele está em uso por controles.');
+    }
+
+    // Excluir grupo
+    $stmt = $pdo->prepare("DELETE FROM grupo_controle WHERE id = ?");
+    $stmt->execute([$id]);
+
+    header('Location: ?path=controles');
+    exit;
+}
+
 ?>
