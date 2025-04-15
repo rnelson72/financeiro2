@@ -9,7 +9,7 @@ function listar_controles($pdo) {
     $controles = $controleModel->listarTodosComSaldo();
     include '../views/controle/index.php';
 }
-?>
+
 
 function editar_controle($pdo) {
     $id = $_GET['id'] ?? null;
@@ -107,3 +107,4 @@ function excluir_lancamento($pdo) {
     header("Location: ?path=controle_lancamentos&id=$ctrl");
     exit;
 }
+?>

@@ -6,10 +6,10 @@ function listar_bancos($pdo) {
     $bancos = $bancos_model->listarTodos();
     include '../views/bancos/index.php';
 }
-?>
 function salvar_bancos($pdo) {
     $stmt = $pdo->prepare("INSERT INTO bancos (descricao, ativo) VALUES (?, 1)");
     $stmt->execute([$_POST['descricao']]);
     header('Location: ?path=bancos');
     exit;
 }
+?>
