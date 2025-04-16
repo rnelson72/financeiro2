@@ -1,6 +1,6 @@
 <h2 class="mb-4">Categorias</h2>
 <a href="?path=categoria_novo" class="btn btn-primary mb-3">Nova Categoria</a>
-<table id="tabela-categorias" class="table table-striped">
+<table id="tabela-categorias" class="table datatable table-striped">
     <thead class="table-dark">
         <tr>
             <th>ID</th>
@@ -27,12 +27,3 @@
         <?php endforeach; ?>
     </tbody>
 </table>
-<script>
-    $(document).ready(function () {
-        $('#tabela-categorias').DataTable({
-            language: {
-                url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json'
-            }
-        });
-    });
-</script>

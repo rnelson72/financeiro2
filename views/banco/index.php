@@ -1,6 +1,6 @@
 <h2 class="mb-4">Cadastro de Bancos</h2>
 <a href='?path=banco_novo' class='btn btn-primary mb-3'>Novo Banco</a>
-<table id="tabela-bancos" class="table table-striped table-hover">
+<table id="tabela-bancos" class="table datatable table-striped table-hover">
     <thead class="table-dark">
         <tr>
             <th>ID</th>
@@ -36,13 +36,3 @@
 
     </tbody>
 </table>
-<!-- Inicialização -->
-<script>
-    $(document).ready(function() {
-        $('#tabela-bancos').DataTable({
-        language: {
-            url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json'
-        }
-        });
-    });
-</script>
