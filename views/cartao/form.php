@@ -24,17 +24,17 @@
 
     <div class="mb-3">
         <label class="form-label">Dia de Fechamento:</label>
-        <input type="number" name="fechamento" class="form-control" value="<?= $registro['dia_fechamento'] ?? '' ?>">
+        <input type="number" name="dia_fechamento" class="form-control" value="<?= $registro['dia_fechamento'] ?? '' ?>">
     </div>
 
     <div class="mb-3">
         <label class="form-label">Dia de Vencimento:</label>
-        <input type="number" name="vencimento" class="form-control" value="<?= $registro['dia_vencimento'] ?? '' ?>">
+        <input type="number" name="dia_vencimento" class="form-control" value="<?= $registro['dia_vencimento'] ?? '' ?>">
     </div>
 
     <div class="mb-3">
         <label class="form-label">Limite:</label>
-        <input type="number" step="0.01" name="limite" class="form-control" value="<?= $registro['linha_credito'] ?? '' ?>">
+        <input type="number" step="0.01" name="linha_credito" class="form-control" value="<?= $registro['linha_credito'] ?? '' ?>">
     </div>
 
     <div class="mb-3">

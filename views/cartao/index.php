@@ -68,21 +68,18 @@
 <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('#tabela-cartoes').DataTable({
-            language: {
-                url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json'
-            }
-        });
-    });
-</script>
-<script>
-    $(document).ready(function() {
+        // Previne erro de reinit
+        if ($.fn.DataTable.isDataTable('#tabela-cartoes')) {
+            $('#tabela-cartoes').DataTable().destroy();
+        }
+
         $('#tabela-cartoes').DataTable({
             language: {
                 url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json'
             }
         });
 
+        // Abertura do modal AJAX
         $('.abrir-finais').click(function(e) {
             e.preventDefault();
             let cartaoId = $(this).data('id');

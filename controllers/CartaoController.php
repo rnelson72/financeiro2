@@ -12,6 +12,7 @@ function listar_cartoes($pdo) {
 }
 
 function cartao_novo($pdo) {
+    $registro = [];
     include '../views/cartao/form.php';
 }
 
@@ -34,9 +35,9 @@ function cartao_salvar($pdo) {
         $stmt->execute([
             $_POST['descricao'],
             $_POST['bandeira'],
-            $_POST['fechamento'],
-            $_POST['vencimento'],
-            $_POST['limite'],
+            $_POST['dia_fechamento'],
+            $_POST['dia_vencimento'],
+            $_POST['linha_credito'],
             $_POST['banco_id'],
             isset($_POST['ativo']) ? 1 : 0,
             $_POST['id']
@@ -47,9 +48,9 @@ function cartao_salvar($pdo) {
         $stmt->execute([
             $_POST['descricao'],
             $_POST['bandeira'],
-            $_POST['fechamento'],
-            $_POST['vencimento'],
-            $_POST['limite'],
+            $_POST['dia_fechamento'],
+            $_POST['dia_vencimento'],
+            $_POST['linha_credito'],
             $_POST['banco_id'],
             isset($_POST['ativo']) ? 1 : 0
         ]);
