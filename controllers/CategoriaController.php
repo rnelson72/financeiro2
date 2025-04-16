@@ -12,7 +12,10 @@ function listar_categorias($pdo) {
         'https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js',
         '/financeiro2/public/assets/js/datatables-init.js'
     ];
-    include '../views/layout.php';
+    $scriptsHead = [
+        'https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css'
+    ];
+        include '../views/layout.php';
 }
 
 function categoria_novo($pdo) {

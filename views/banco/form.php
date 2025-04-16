@@ -43,7 +43,7 @@
     </div>
 
     <button type="submit" class="btn btn-success">Salvar</button>
-    <a href="?path=bancos" class="btn btn-secondary ms-2">Cancelar</a>
+    <a href="?path=banco" class="btn btn-secondary ms-2">Cancelar</a>
 </form>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

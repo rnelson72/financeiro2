@@ -12,6 +12,9 @@ function listar_bancos($pdo) {
         'https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js',
         '/financeiro2/public/assets/js/datatables-init.js'
     ];
+    $scriptsHead = [
+        'https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css'
+    ];
     include '../views/layout.php';
 }
 

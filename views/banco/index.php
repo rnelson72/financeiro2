@@ -34,15 +34,15 @@
             </tr>
         <?php endforeach; ?>
 
-        <!-- Inicialização -->
-        <script>
-            $(document).ready(function() {
-                $('#tabela-bancos').DataTable({
-                language: {
-                    url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json'
-                }
-                });
-            });
-        </script>
     </tbody>
 </table>
+<!-- Inicialização -->
+<script>
+    $(document).ready(function() {
+        $('#tabela-bancos').DataTable({
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json'
+        }
+        });
+    });
+</script>
