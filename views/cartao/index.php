@@ -7,10 +7,10 @@
 </head>
 <body class="container mt-4">
 <h2>Cartoes Credito</h2>
-<a href='?path=cartoes_credito_novo' class='btn btn-primary mb-3'>Novo</a>
+<a href='?path=cartao_novo' class='btn btn-primary mb-3'>Novo</a>
 <table class='table table-striped'><thead><tr><th>ID</th><th>Descrição</th><th>Ações</th></tr></thead><tbody>
 <?php foreach ($cartoes_credito as $item): ?>
-<tr><td><?= $item['id'] ?></td><td><?= htmlspecialchars($item['descricao'] ?? $item['nome'] ?? '') ?></td><td><a href='?path=cartoes_credito_editar&id=<?= $item['id'] ?>' class='btn btn-warning btn-sm'>Editar</a> <a href='?path=cartoes_credito_excluir&id=<?= $item['id'] ?>' class='btn btn-danger btn-sm' onclick='return confirm("Confirma exclusão?")'>Excluir</a></td></tr><?php endforeach; ?>
+<tr><td><?= $item['id'] ?></td><td><?= htmlspecialchars($item['descricao'] ?? $item['nome'] ?? '') ?></td><td><a href='?path=cartao_editar&id=<?= $item['id'] ?>' class='btn btn-warning btn-sm'>Editar</a> <a href='?path=cartao_excluir&id=<?= $item['id'] ?>' class='btn btn-danger btn-sm' onclick='return confirm("Confirma exclusão?")'>Excluir</a></td></tr><?php endforeach; ?>
 </tbody></table>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

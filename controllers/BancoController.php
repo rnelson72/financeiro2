@@ -1,6 +1,10 @@
 <?php
 require_once '../models/Banco.php';
 
+function nullIfEmpty($value) {
+    return trim($value) === '' ? null : $value;
+}
+
 function listar_bancos($pdo) {
     $model = new Banco($pdo);
     $bancos = $model->listarTodos();
@@ -13,7 +17,7 @@ function banco_novo($pdo) {
 
 function banco_editar($pdo) {
     $model = new Banco($pdo);
-    $banco = $model->buscarPorId($_GET['id']);
+    $registro = $model->buscarPorId($_GET['id']);
     include '../views/bancos/form.php';
 }
 
@@ -25,28 +29,33 @@ function banco_excluir($pdo) {
 }
 
 function banco_salvar($pdo) {
-    if (isset($_POST['id']) && $_POST['id']) {
+    $id = $_POST['id'] ?? null;
+
+    if (!empty($id)) {
+        // Atualizar
         $stmt = $pdo->prepare("UPDATE bancos SET descricao = ?, numero = ?, conta = ?, titular = ?, pix = ?, ativo = ? WHERE id = ?");
         $stmt->execute([
             $_POST['descricao'],
-            $_POST['numero'],
-            $_POST['conta'],
-            $_POST['titular'],
-            $_POST['pix'],
-            $_POST['ativo'] ?? 1,
-            $_POST['id']
+            nullIfEmpty($_POST['numero']),
+            nullIfEmpty($_POST['conta']),
+            nullIfEmpty($_POST['titular']),
+            nullIfEmpty($_POST['pix']),
+            isset($_POST['ativo']) ? 1 : 0,
+            $id
         ]);
     } else {
+        // Inserir novo
         $stmt = $pdo->prepare("INSERT INTO bancos (descricao, numero, conta, titular, pix, ativo) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->execute([
             $_POST['descricao'],
-            $_POST['numero'],
-            $_POST['conta'],
-            $_POST['titular'],
-            $_POST['pix'],
-            $_POST['ativo'] ?? 1
+            nullIfEmpty($_POST['numero']),
+            nullIfEmpty($_POST['conta']),
+            nullIfEmpty($_POST['titular']),
+            nullIfEmpty($_POST['pix']),
+            isset($_POST['ativo']) ? 1 : 0
         ]);
     }
+
     header('Location: ?path=bancos');
     exit;
 }

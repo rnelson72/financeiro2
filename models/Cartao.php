@@ -1,5 +1,5 @@
 <?php
-class Cartoes_credito {
+class Cartao {
     private $pdo;
 
     public function __construct($pdo) {
@@ -7,7 +7,7 @@ class Cartoes_credito {
     }
 
     public function listarTodos() {
-        $stmt = $this->pdo->query("SELECT * FROM cartoes_credito WHERE ativo = 1");
+        $stmt = $this->pdo->query("SELECT * FROM cartao ");
         return $stmt->fetchAll();
     }
 }

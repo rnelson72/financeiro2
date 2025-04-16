@@ -7,7 +7,7 @@
 </head>
 <body class="container mt-4">
 <h2><?= isset($registro) ? 'Editar' : 'Novo' ?> Cartoes Credito</h2>
-<form method='POST' action='?path=cartoes_credito_salvar'>
+<form method='POST' action='?path=cartao_salvar'>
   <input type='hidden' name='id' value='<?= $registro['id'] ?? '' ?>'>
 <div class='mb-3'><label class='form-label'>Descricao:</label><input type='text' name='descricao' class='form-control' value='<?= $registro['descricao'] ?? '' ?>' required></div>
 <div class='mb-3'><label class='form-label'>Fechamento:</label><input type='text' name='fechamento' class='form-control' value='<?= $registro['fechamento'] ?? '' ?>' required></div>

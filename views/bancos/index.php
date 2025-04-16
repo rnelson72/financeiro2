@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Bancos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
 </head>
@@ -37,8 +38,12 @@
                 <td><?= htmlspecialchars($item['pix']) ?></td>
                 <td><?= $item['ativo'] ? 'Sim' : 'Não' ?></td>
                 <td>
-                    <a href='?path=banco_editar&id=<?= $item['id'] ?>' class='btn btn-sm btn-warning'>Editar</a>
-                    <a href='?path=banco_excluir&id=<?= $item['id'] ?>' class='btn btn-sm btn-danger' onclick='return confirm("Confirma exclusão?")'>Excluir</a>
+                    <a href='?path=banco_editar&id=<?= $item['id'] ?>' class='btn btn-sm btn-outline-primary' title='Editar'>
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                    <a href='?path=banco_excluir&id=<?= $item['id'] ?>' class='btn btn-sm btn-outline-danger' title='Excluir' onclick='return confirm("Confirma exclusão?")'>
+                        <i class="bi bi-trash"></i>
+                    </a>
                 </td>
             </tr>
         <?php endforeach; ?>
