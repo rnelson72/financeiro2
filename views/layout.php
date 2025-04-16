@@ -1,47 +1,96 @@
-<!-- views/layout.php -->
+<?php
+if (session_status() === PHP_SESSION_NONE) session_start();
+
+if (!isset($_SESSION['usuario_id']) && basename($_SERVER['PHP_SELF']) !== 'login.php') {
+    header('Location: ?path=login');
+    exit;
+}
+
+function renderScripts($scripts) {
+    if (is_array($scripts)) {
+        foreach ($scripts as $script) {
+            if (str_ends_with($script, '.css')) {
+                echo "<link rel=\"stylesheet\" href=\"$script\">\n";
+            } else {
+                echo "<script src=\"$script\"></script>\n";
+            }
+        }
+    } elseif (!empty($scripts)) {
+        if (str_ends_with($scripts, '.css')) {
+            echo "<link rel=\"stylesheet\" href=\"$scripts\">\n";
+        } else {
+            echo "<script src=\"$scripts\"></script>\n";
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
+<head>
     <meta charset="UTF-8">
     <title><?= $titulo ?? 'Sistema' ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap e ícones -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="/financeiro2/public/assets/css/style.css" rel="stylesheet">
-  </head>
-  <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-      <div class="container">
-        <a class="navbar-brand" href="?path=controles">Financeiro2</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="menuPrincipal">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link" href="?path=controles">Controles</a></li>
-            <li class="nav-item"><a class="nav-link" href="?path=controle_novo">Novo Controle</a></li>
+    <!-- Scripts HEAD adicionais -->
+    <?php renderScripts($scriptsHead ?? []); ?>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+  <div class="container">
+    <a class="navbar-brand" href="?path=menu">Financeiro2</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="menuPrincipal">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="cadastrosDropdown" role="button" data-bs-toggle="dropdown">Cadastros</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="?path=banco">Bancos</a></li>
+            <li><a class="dropdown-item" href="?path=categoria">Categorias</a></li>
           </ul>
-        </div>
-      </div>
-    </nav>
+        </li>
 
-    <div class="container">
-      <?php include $conteudo; ?>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown">Administração</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="?path=usuario">Usuários</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item me-3 text-white">
+          <span><i class="bi bi-person-circle"></i> <?= $_SESSION['usuario_nome'] ?? 'Usuário' ?></span>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-warning" href="?path=logout"><i class="bi bi-box-arrow-right"></i> Sair</a>
+        </li>
+      </ul>
     </div>
+  </div>
+</nav>
 
-    <footer class="bg-light text-center p-3 mt-5 border-top">
-      <p class="mb-0">&copy; <?= date('Y') ?> - Sistema Financeiro | Isabel Cristina C. Gonçalves</p>
-    </footer>
+<div class="container">
+  <?php include $conteudo; ?>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+<footer class="bg-light text-center p-3 mt-5 border-top">
+  <p class="mb-0">&copy; <?= date('Y') ?> - Sistema Financeiro | Isabel Cristina C. Gonçalves</p>
+</footer>
 
-    <!-- DataTables JS -->
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<!-- Scripts base -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 
-  </body>
+<!-- Scripts BODY adicionais -->
+<?php renderScripts($scriptsBody ?? []); ?>
+</body>
 </html>

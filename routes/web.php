@@ -3,6 +3,12 @@ $path = $_GET['path'] ?? '';
 require_once '../config/database.php';
 
 switch ($path) {
+    case 'menu':
+        $titulo = 'Menu Principal';
+        $conteudo = '../views/menu.php';
+        include '../views/layout.php';
+        break;
+    
     case 'controles':                     require_once '../controllers/ControleController.php';         listar_controles($pdo); break;
     case 'controle_novo':                 require_once '../controllers/ControleController.php';         novo_controle($pdo); break;
     case 'controle_editar':               require_once '../controllers/ControleController.php';         editar_controle($pdo); break;
@@ -32,9 +38,18 @@ switch ($path) {
     case 'categoria_editar':              require_once '../controllers/CategoriaController.php';        categoria_editar($pdo); break;
     case 'categoria_excluir':             require_once '../controllers/CategoriaController.php';        categoria_excluir($pdo); break;
     case 'categoria_salvar':              require_once '../controllers/CategoriaController.php';        categoria_salvar($pdo); break;   
+    case 'usuario':                       require_once '../controllers/UsuarioController.php';          listar_usuarios($pdo); break;
+    case 'usuario_novo':                  require_once '../controllers/UsuarioController.php';          usuario_novo($pdo); break;
+    case 'usuario_editar':                require_once '../controllers/UsuarioController.php';          usuario_editar($pdo); break;
+    case 'usuario_excluir':               require_once '../controllers/UsuarioController.php';          usuario_excluir($pdo); break;
+    case 'usuario_salvar':                require_once '../controllers/UsuarioController.php';          usuario_salvar($pdo); break;
     case 'migrar_cartoes':                require_once '../controllers/MigracaoController.php';         migrar_cartoes($pdo); break;
     case 'migrar_categoria':              require_once '../config/migrations/migrate_categoria.php';    break;
            
-    default: echo '<h1>Sistema de Controle</h1>'; break;
-}
+    default: 
+        $titulo = 'Menu Principal';
+        $conteudo = '../views/menu.php';
+        include '../views/layout.php';
+        break;
+ }
 ?>

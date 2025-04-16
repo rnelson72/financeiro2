@@ -1,24 +1,35 @@
 <?php
-// =======================
-// CONTROLLER - CategoriaController.php
-// =======================
 require_once '../models/Categoria.php';
 
 function listar_categorias($pdo) {
     $model = new Categoria($pdo);
     $categorias = $model->listarTodos();
-    include '../views/categoria/index.php';
+
+    $titulo = 'Categorias';
+    $conteudo = '../views/categoria/index.php';
+    $scriptsBody = [
+        'https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js',
+        'https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js',
+        '/financeiro2/public/assets/js/datatables-init.js'
+    ];
+    include '../views/layout.php';
 }
 
 function categoria_novo($pdo) {
     $registro = [];
-    include '../views/categoria/form.php';
+
+    $titulo = 'Nova Categoria';
+    $conteudo = '../views/categoria/form.php';
+    include '../views/layout.php';
 }
 
 function categoria_editar($pdo) {
     $model = new Categoria($pdo);
     $registro = $model->buscarPorId($_GET['id']);
-    include '../views/categoria/form.php';
+
+    $titulo = 'Editar Categoria';
+    $conteudo = '../views/categoria/form.php';
+    include '../views/layout.php';
 }
 
 function categoria_excluir($pdo) {
@@ -31,17 +42,28 @@ function categoria_excluir($pdo) {
 function categoria_salvar($pdo) {
     $model = new Categoria($pdo);
     $dados = [
-        'conta' => $_POST['conta'],
-        'descricao' => $_POST['descricao'],
-        'tipo' => $_POST['tipo'],
-        'ativo' => isset($_POST['ativo']) ? 1 : 0
+        'conta'      => $_POST['conta'],
+        'descricao'  => $_POST['descricao'],
+        'tipo'       => $_POST['tipo'],
+        'ativo'      => isset($_POST['ativo']) ? 1 : 0
     ];
 
-    if (!empty($_POST['id'])) {
-        $model->atualizar($_POST['id'], $dados);
+    $id = $_POST['id'] ?? null;
+    if ($model->contaJaExiste($dados['conta'], $id)) {
+        $erro = "Já existe uma categoria com essa conta.";
+        $registro = $dados;
+        $titulo = empty($id) ? 'Nova Categoria' : 'Editar Categoria';
+        $conteudo = '../views/categoria/form.php';
+        include '../views/layout.php';
+        return;
+    }
+
+    if ($id) {
+        $model->atualizar($id, $dados);
     } else {
         $model->inserir($dados);
     }
+
     header('Location: ?path=categoria');
     exit;
 }

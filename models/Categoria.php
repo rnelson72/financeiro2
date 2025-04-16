@@ -18,13 +18,26 @@ class Categoria {
     }
 
     public function inserir($dados) {
+        if ($this->contaJaExiste($dados['conta'])) {
+            throw new Exception("Conta já existente.");
+        }
         $stmt = $this->pdo->prepare("INSERT INTO categoria (conta, descricao, tipo, ativo) VALUES (?, ?, ?, ?)");
         $stmt->execute([$dados['conta'], $dados['descricao'], $dados['tipo'], $dados['ativo']]);
     }
 
     public function atualizar($id, $dados) {
+        if ($this->contaJaExiste($dados['conta'], $id)) {
+            throw new Exception("Conta já existente.");
+        }
         $stmt = $this->pdo->prepare("UPDATE categoria SET conta = ?, descricao = ?, tipo = ?, ativo = ? WHERE id = ?");
         $stmt->execute([$dados['conta'], $dados['descricao'], $dados['tipo'], $dados['ativo'], $id]);
+    }
+
+    public function contaJaExiste($conta, $id = null) {
+        $sql = "SELECT id FROM categoria WHERE conta = ?" . ($id ? " AND id != ?" : "");
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($id ? [$conta, $id] : [$conta]);
+        return $stmt->fetch() !== false;
     }
 } 
 ?>
