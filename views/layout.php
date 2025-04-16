@@ -1,7 +1,9 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) session_start();
 
-if (!isset($_SESSION['usuario_id']) && basename($_SERVER['PHP_SELF']) !== 'login.php') {
+$rotaAtual = $_GET['path'] ?? '';
+
+if (!isset($_SESSION['usuario_id']) && !in_array($rotaAtual, ['login', 'autenticar'])) {
     header('Location: ?path=login');
     exit;
 }
@@ -24,6 +26,7 @@ function renderScripts($scripts) {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -32,6 +35,7 @@ function renderScripts($scripts) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap e ícones -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="/financeiro2/public/assets/css/style.css" rel="stylesheet">

@@ -7,11 +7,12 @@ class Auth {
     }
 
     public function validarLogin($email, $senha) {
-        $stmt = $this->pdo->prepare("SELECT * FROM usuarios WHERE email = ? AND ativo = 1 LIMIT 1");
+        $stmt = $this->pdo->prepare("SELECT * FROM usuarios WHERE email = ?  LIMIT 1");
         $stmt->execute([$email]);
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($usuario && password_verify($senha, $usuario['senha'])) {
+        var_dump(password_hash('1234', PASSWORD_DEFAULT)); exit;
+        
+        if ($usuario && password_verify($senha, $usuario['senha_hash'])) {
             return $usuario;
         }
 

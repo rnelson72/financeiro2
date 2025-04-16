@@ -20,7 +20,7 @@ switch ($path) {
     case 'controle_salvar_lancamento':    require_once '../controllers/ControleController.php';         salvar_lancamento($pdo); break;
     case 'controle_excluir_lancamento':   require_once '../controllers/ControleController.php';         excluir_lancamento($pdo); break;
     case 'grupo_excluir':                 require_once '../controllers/ControleController.php';         excluir_grupo($pdo); break;
-    case 'bancos':                        require_once '../controllers/BancoController.php';            listar_bancos($pdo); break;
+    case 'banco':                         require_once '../controllers/BancoController.php';            listar_bancos($pdo); break;
     case 'banco_novo':                    require_once '../controllers/BancoController.php';            banco_novo($pdo); break;
     case 'banco_editar':                  require_once '../controllers/BancoController.php';            banco_editar($pdo); break;
     case 'banco_excluir':                 require_once '../controllers/BancoController.php';            banco_excluir($pdo); break;
@@ -45,7 +45,10 @@ switch ($path) {
     case 'usuario_salvar':                require_once '../controllers/UsuarioController.php';          usuario_salvar($pdo); break;
     case 'migrar_cartoes':                require_once '../controllers/MigracaoController.php';         migrar_cartoes($pdo); break;
     case 'migrar_categoria':              require_once '../config/migrations/migrate_categoria.php';    break;
-           
+    case 'login':                         require_once '../controllers/AuthController.php';             login($pdo); break;
+    case 'autenticar':                    require_once '../controllers/AuthController.php';             autenticar($pdo); break;
+    case 'logout':                        require_once '../controllers/AuthController.php';             logout(); break;
+          
     default: 
         $titulo = 'Menu Principal';
         $conteudo = '../views/menu.php';

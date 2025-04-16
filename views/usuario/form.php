@@ -28,11 +28,6 @@
         <?php if (isset($registro)) echo '<small class="text-muted">Deixe em branco para manter a senha atual.</small>'; ?>
     </div>
 
-    <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" name="ativo" value="1" <?= (!isset($registro['ativo']) || $registro['ativo']) ? 'checked' : '' ?>>
-        <label class="form-check-label">Ativo</label>
-    </div>
-
     <button type="submit" class="btn btn-success">Salvar</button>
     <a href="?path=usuario" class="btn btn-secondary ms-2">Cancelar</a>
 </form>

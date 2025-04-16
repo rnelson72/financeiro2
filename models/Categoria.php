@@ -7,7 +7,7 @@ class Categoria {
     }
 
     public function listarTodos() {
-        $stmt = $this->pdo->query("SELECT * FROM categoria ORDER BY descricao");
+        $stmt = $this->pdo->query("SELECT * FROM categoria ORDER BY conta");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 

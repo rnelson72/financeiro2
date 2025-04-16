@@ -25,7 +25,6 @@
             <td><?= $usuario['id'] ?></td>
             <td><?= htmlspecialchars($usuario['nome']) ?></td>
             <td><?= htmlspecialchars($usuario['email']) ?></td>
-            <td><?= $usuario['ativo'] ? 'Sim' : 'Não' ?></td>
             <td>
                 <a href="?path=usuario_editar&id=<?= $usuario['id'] ?>" class="btn btn-sm btn-outline-primary">Editar</a>
                 <a href="?path=usuario_excluir&id=<?= $usuario['id'] ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Confirma exclusão?')">Excluir</a>
