@@ -15,7 +15,6 @@
             <th>ID</th>
             <th>Nome</th>
             <th>Email</th>
-            <th>Ativo</th>
             <th>Ações</th>
         </tr>
     </thead>

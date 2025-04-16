@@ -1,6 +1,22 @@
 <?php
 require_once '../models/Usuario.php';
 
+function emailJaExiste($email, $id = null) {
+    // Verifica se o e-mail já está cadastrado para outro usuário
+    $sql = "SELECT COUNT(*) FROM usuarios WHERE email = ?";
+    $params = [$email];
+
+    if ($id) {
+        $sql .= " AND id != ?";
+        $params[] = $id;
+    }
+
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute($params);
+
+    return $stmt->fetchColumn() > 0;
+}
+
 function listar_usuarios($pdo) {
     $model = new Usuario($pdo);
     $usuarios = $model->listarTodos();
@@ -68,18 +84,3 @@ function usuario_salvar($pdo) {
     exit;
 }
 
-function emailJaExiste($email, $id = null) {
-    // Verifica se o e-mail já está cadastrado para outro usuário
-    $sql = "SELECT COUNT(*) FROM usuarios WHERE email = ?";
-    $params = [$email];
-
-    if ($id) {
-        $sql .= " AND id != ?";
-        $params[] = $id;
-    }
-
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->execute($params);
-
-    return $stmt->fetchColumn() > 0;
-}
