@@ -20,10 +20,13 @@ switch ($path) {
     case 'banco_excluir':                 require_once '../controllers/BancoController.php';            banco_excluir($pdo); break;
     case 'banco_salvar':                  require_once '../controllers/BancoController.php';            banco_salvar($pdo); break;
     case 'cartao':                        require_once '../controllers/CartaoController.php';           listar_cartoes($pdo); break;
+    case 'cartao_novo':                   require_once '../controllers/CartaoController.php';           cartao_novo($pdo); break;
+    case 'cartao_editar':                 require_once '../controllers/CartaoController.php';           cartao_editar($pdo); break;
+    case 'cartao_excluir':                require_once '../controllers/CartaoController.php';           cartao_excluir($pdo); break;
     case 'cartao_salvar':                 require_once '../controllers/CartaoController.php';           cartao_salvar($pdo); break;
     case 'final_cartao_modal':            require_once '../controllers/CartaoController.php';           final_cartao_modal($pdo); break;
     case 'final_cartao_salvar':           require_once '../controllers/CartaoController.php';           final_cartao_salvar($pdo); break;
-    case 'final_cartao_excluir':          require_once '../controllers/CartaoController.php';          final_cartao_excluir($pdo); break;
+    case 'final_cartao_excluir':          require_once '../controllers/CartaoController.php';           final_cartao_excluir($pdo); break;
     case 'migrar_cartoes':                require_once '../controllers/MigracaoController.php';         migrar_cartoes($pdo); break;
        
     default: echo '<h1>Sistema de Controle</h1>'; break;

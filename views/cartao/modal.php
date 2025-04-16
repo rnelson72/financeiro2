@@ -34,7 +34,7 @@
         <?php foreach ($finais as $item): ?>
         <tr>
             <td><?= htmlspecialchars($item['final']) ?></td>
-            <td><?= htmlspecialchars($item['titular']) ?></td>
+            <td><?= htmlspecialchars($item['titular'] ?? '') ?></td>
             <td><?= $item['is_virtual'] ? 'Sim' : 'Não' ?></td>
             <td>
                 <button class="btn btn-sm btn-outline-danger excluir-final"

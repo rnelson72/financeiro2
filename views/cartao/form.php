@@ -38,8 +38,15 @@
     </div>
 
     <div class="mb-3">
-        <label class="form-label">Banco ID:</label>
-        <input type="text" name="banco_id" class="form-control" value="<?= $registro['banco_id'] ?? '' ?>">
+        <label class="form-label">Banco:</label>
+        <select name="banco_id" class="form-select" required>
+            <option value="">Sem Vínculo</option>
+            <?php foreach ($bancos as $banco): ?>
+                <option value="<?= $banco['id'] ?>" <?= ($registro['banco_id'] ?? '') == $banco['id'] ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($banco['descricao']) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
     </div>
 
     <div class="mb-3 form-check">

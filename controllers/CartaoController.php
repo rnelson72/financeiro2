@@ -13,12 +13,14 @@ function listar_cartoes($pdo) {
 
 function cartao_novo($pdo) {
     $registro = [];
+    $bancos = $pdo->query("SELECT id, descricao FROM bancos ORDER BY descricao")->fetchAll(PDO::FETCH_ASSOC);
     include '../views/cartao/form.php';
 }
 
 function cartao_editar($pdo) {
     $model = new Cartao($pdo);
     $registro = $model->buscarPorId($_GET['id']);
+    $bancos = $pdo->query("SELECT id, descricao FROM bancos ORDER BY descricao")->fetchAll(PDO::FETCH_ASSOC);
     include '../views/cartao/form.php';
 }
 
@@ -31,6 +33,7 @@ function cartao_excluir($pdo) {
 
 function cartao_salvar($pdo) {
     if (!empty($_POST['id'])) {
+        $banco_id = trim($_POST['banco_id']) !== '' ? $_POST['banco_id'] : null;
         $stmt = $pdo->prepare("UPDATE cartao SET descricao = ?, bandeira = ?, dia_fechamento = ?, dia_vencimento = ?, linha_credito = ?, banco_id = ?, ativo = ? WHERE id = ?");
         $stmt->execute([
             $_POST['descricao'],
@@ -38,11 +41,12 @@ function cartao_salvar($pdo) {
             $_POST['dia_fechamento'],
             $_POST['dia_vencimento'],
             $_POST['linha_credito'],
-            $_POST['banco_id'],
+            $banco_id,
             isset($_POST['ativo']) ? 1 : 0,
             $_POST['id']
         ]);
     } else {
+        $banco_id = trim($_POST['banco_id']) !== '' ? $_POST['banco_id'] : null;
         $stmt = $pdo->prepare("INSERT INTO cartao (descricao, bandeira, dia_fechamento, dia_vencimento, linha_credito, banco_id, ativo)
                                VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->execute([
@@ -51,7 +55,7 @@ function cartao_salvar($pdo) {
             $_POST['dia_fechamento'],
             $_POST['dia_vencimento'],
             $_POST['linha_credito'],
-            $_POST['banco_id'],
+            $banco_id,
             isset($_POST['ativo']) ? 1 : 0
         ]);
     }
