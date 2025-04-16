@@ -1,17 +1,17 @@
 <?php
-require_once '../database.php';
+require_once __DIR__ . '/../database.php';
 
 function nullIfEmpty($value) {
     return trim($value) === '' ? null : $value;
 }
 
 function limparFinal($item) {
-    $item = trim($item);
+    $item = strtoupper(trim($item));
     if ($item === '' || $item === '0' || $item === '---') return null;
     return $item;
 }
 
-function extrairFinalTitular($item) {
+function extrairFinalETitular($item) {
     $item = strtoupper(trim($item));
     $final = substr($item, 0, 4);
     $titular = strlen($item) > 4 ? substr($item, 4, 1) : null;
@@ -23,53 +23,55 @@ function finaisParaArray($campo) {
     return array_filter(array_map('limparFinal', explode(';', $campo)));
 }
 
-// Selecionar registros antigos
+// Lê os cartões antigos
 $cartoes_antigos = $pdo->query("SELECT * FROM cartoes_credito")->fetchAll(PDO::FETCH_ASSOC);
 
 foreach ($cartoes_antigos as $registro) {
-    $finais_raw = trim($registro['finais'] ?? '');
-    $virtuais_raw = trim($registro['virtuais'] ?? '');
+    $id = $registro['id'];
 
-    // Se ambos forem 0 ou vazios, ignorar inserção em final_cartao
-    $ignorar_finais = in_array($finais_raw, ['0', '---', '', null]);
-    $ignorar_virtuais = in_array($virtuais_raw, ['0', '---', '', null]);
-
-    // Inserir no novo 'cartao'
-    $stmt = $pdo->prepare("INSERT INTO cartao (descricao, bandeira, dia_vencimento, dia_fechamento, linha_credito, banco_id, ativo)
-                           VALUES (?, ?, ?, ?, ?, ?, ?)");
+    // Inserir no novo 'cartao' com mesmo ID
+    $stmt = $pdo->prepare("INSERT INTO cartao (id, descricao, bandeira, dia_vencimento, dia_fechamento, linha_credito, banco_id, ativo)
+                           VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->execute([
+        $id,
         $registro['descricao'],
         nullIfEmpty($registro['bandeira']),
         nullIfEmpty($registro['dia_vencimento']),
         nullIfEmpty($registro['dia_fechamento']),
         nullIfEmpty($registro['linha_credito']),
-        null, // banco_id ainda não existia
+        null,
         $registro['ativo'] ?? 1
     ]);
-    $novo_cartao_id = $pdo->lastInsertId();
 
-    // Ignora finais/virtuais se ambos não tiverem valor útil
-    if ($ignorar_finais && $ignorar_virtuais) continue;
-
-    // Processa os finais
-    $finais_array = finaisParaArray($finais_raw);
-    $virtuais_array = array_map('trim', explode(';', $virtuais_raw));
-
+    // Processar FINAIS como físicos (is_virtual = 0)
+    $finais_array = finaisParaArray($registro['finais'] ?? '');
     foreach ($finais_array as $item) {
-        list($final, $titular) = extrairFinalTitular($item);
-        if (!$final || !is_numeric($final)) continue;
+        list($final, $titular) = extrairFinalETitular($item);
+        if (!is_numeric($final)) continue;
 
-        $virtual = in_array($final, $virtuais_array) ? 1 : 0;
-
-        $stmt = $pdo->prepare("INSERT INTO final_cartao (final, cartao_id, virtual, titular, ativo)
-                               VALUES (?, ?, ?, ?, 1)");
-        $stmt->execute([
+        $stmtFinal = $pdo->prepare("INSERT INTO final_cartao (final, cartao_id, is_virtual, titular, ativo)
+                                    VALUES (?, ?, 0, ?, 1)");
+        $stmtFinal->execute([
             $final,
-            $novo_cartao_id,
-            $virtual,
+            $id,
             $titular
+        ]);
+    }
+
+    // Processar VIRTUAIS separadamente (is_virtual = 1)
+    $virtuais_array = finaisParaArray($registro['virtuais'] ?? '');
+    foreach ($virtuais_array as $item) {
+        $final = substr($item, 0, 4);
+        if (!is_numeric($final)) continue;
+
+        $stmtFinal = $pdo->prepare("INSERT INTO final_cartao (final, cartao_id, is_virtual, titular, ativo)
+                                    VALUES (?, ?, 1, ?, 1)");
+        $stmtFinal->execute([
+            $final,
+            $id,
+            null // virtuais não têm titular especificado
         ]);
     }
 }
 
-echo "Migração executada com sucesso.\n";
+echo "<p>Migração corrigida e executada com sucesso.</p>";
