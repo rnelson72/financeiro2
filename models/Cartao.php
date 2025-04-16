@@ -7,10 +7,15 @@ class Cartao {
     }
 
     public function listarTodos() {
-        $stmt = $this->pdo->query("SELECT * FROM cartao ORDER BY descricao");
+        $stmt = $this->pdo->query("
+            SELECT c.*, b.descricao AS banco_nome
+            FROM cartao c
+            LEFT JOIN bancos b ON c.banco_id = b.id
+            ORDER BY c.descricao
+        ");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
+    
     public function buscarPorId($id) {
         $stmt = $this->pdo->prepare("SELECT * FROM cartao WHERE id = ?");
         $stmt->execute([$id]);

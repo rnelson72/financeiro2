@@ -35,7 +35,7 @@
             <td><?= $item['dia_vencimento'] ?></td>
             <td><?= $item['dia_fechamento'] ?></td>
             <td><?= number_format($item['linha_credito'], 2, ',', '.') ?></td>
-            <td><?= $item['banco_id'] ?></td>
+            <td><?= htmlspecialchars($item['banco_nome'] ?? '-') ?></td>
             <td>
                 <a href='?path=cartao_editar&id=<?= $item['id'] ?>' class='btn btn-sm btn-outline-primary' title='Editar'><i class="bi bi-pencil-square"></i></a>
                 <a href='?path=cartao_excluir&id=<?= $item['id'] ?>' class='btn btn-sm btn-outline-danger' title='Excluir' onclick='return confirm("Confirma exclusão?")'><i class="bi bi-trash"></i></a>
@@ -67,30 +67,30 @@
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 <script>
-    $(document).ready(function() {
-        // Previne erro de reinit
-        if ($.fn.DataTable.isDataTable('#tabela-cartoes')) {
-            $('#tabela-cartoes').DataTable().destroy();
+$(document).ready(function () {
+    if ($.fn.DataTable.isDataTable('#tabela-cartoes')) {
+        $('#tabela-cartoes').DataTable().destroy();
+    }
+
+    $('#tabela-cartoes').DataTable({
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json'
         }
+    });
 
-        $('#tabela-cartoes').DataTable({
-            language: {
-                url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json'
-            }
-        });
+    // Abertura do modal de finais
+    $(document).on('click', '.abrir-finais', function (e) {
+        e.preventDefault();
 
-        // Abertura do modal AJAX
-        $('.abrir-finais').click(function(e) {
-            e.preventDefault();
-            let cartaoId = $(this).data('id');
-            $('#modal-finais-conteudo').html('<p>Carregando...</p>');
-            $('#modalFinais').modal('show');
+        const cartaoId = $(this).data('id');
+        $('#modal-finais-conteudo').html('<p>Carregando...</p>');
+        $('#modalFinais').modal('show');
 
-            $.get('?path=final_cartao_modal&id=' + cartaoId, function(data) {
-                $('#modal-finais-conteudo').html(data);
-            });
+        $.get('?path=final_cartao_modal&id=' + cartaoId, function (data) {
+            $('#modal-finais-conteudo').html(data);
         });
     });
+});
 </script>
 
 </body>
