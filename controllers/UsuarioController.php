@@ -67,3 +67,19 @@ function usuario_salvar($pdo) {
     header('Location: ?path=usuario');
     exit;
 }
+
+function emailJaExiste($email, $id = null) {
+    // Verifica se o e-mail já está cadastrado para outro usuário
+    $sql = "SELECT COUNT(*) FROM usuarios WHERE email = ?";
+    $params = [$email];
+
+    if ($id) {
+        $sql .= " AND id != ?";
+        $params[] = $id;
+    }
+
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute($params);
+
+    return $stmt->fetchColumn() > 0;
+}
