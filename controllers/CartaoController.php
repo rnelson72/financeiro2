@@ -73,14 +73,24 @@ function final_cartao_modal($pdo) {
 }
 
 function final_cartao_salvar($pdo) {
-    $stmt = $pdo->prepare("INSERT INTO final_cartao (final, cartao_id, is_virtual, titular, ativo)
-                           VALUES (?, ?, ?, ?, 1)");
-    $stmt->execute([
-        $_POST['final'],
-        $_POST['cartao_id'],
-        $_POST['is_virtual'],
-        nullIfEmpty($_POST['titular'])
-    ]);
+    if (!empty($_POST['id_final'])) {
+        $stmt = $pdo->prepare("UPDATE final_cartao SET final = ?, is_virtual = ?, titular = ? WHERE id = ?");
+        $stmt->execute([
+            $_POST['final'],
+            $_POST['is_virtual'],
+            nullIfEmpty($_POST['titular']),
+            $_POST['id_final']
+        ]);
+    } else {
+        $stmt = $pdo->prepare("INSERT INTO final_cartao (final, cartao_id, is_virtual, titular, ativo)
+                               VALUES (?, ?, ?, ?, 1)");
+        $stmt->execute([
+            $_POST['final'],
+            $_POST['cartao_id'],
+            $_POST['is_virtual'],
+            nullIfEmpty($_POST['titular'])
+        ]);
+    }
     exit;
 }
 

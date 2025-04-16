@@ -39,7 +39,7 @@
 
     <div class="mb-3">
         <label class="form-label">Banco:</label>
-        <select name="banco_id" class="form-select" required>
+        <select name="banco_id" class="form-select">
             <option value="">Sem Vínculo</option>
             <?php foreach ($bancos as $banco): ?>
                 <option value="<?= $banco['id'] ?>" <?= ($registro['banco_id'] ?? '') == $banco['id'] ? 'selected' : '' ?>>
