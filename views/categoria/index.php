@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Categorias</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-</head>
-<body class="container mt-4">
 <h2 class="mb-4">Categorias</h2>
 <a href="?path=categoria_novo" class="btn btn-primary mb-3">Nova Categoria</a>
 <table id="tabela-categorias" class="table table-striped">
@@ -36,10 +27,6 @@
         <?php endforeach; ?>
     </tbody>
 </table>
-
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 <script>
     $(document).ready(function () {
         $('#tabela-categorias').DataTable({
@@ -49,5 +36,3 @@
         });
     });
 </script>
-</body>
-</html>
