@@ -27,8 +27,14 @@ switch ($path) {
     case 'final_cartao_modal':            require_once '../controllers/CartaoController.php';           final_cartao_modal($pdo); break;
     case 'final_cartao_salvar':           require_once '../controllers/CartaoController.php';           final_cartao_salvar($pdo); break;
     case 'final_cartao_excluir':          require_once '../controllers/CartaoController.php';           final_cartao_excluir($pdo); break;
+    case 'categoria':                     require_once '../controllers/CategoriaController.php';        listar_categorias($pdo); break;
+    case 'categoria_novo':                require_once '../controllers/CategoriaController.php';        categoria_novo($pdo); break;
+    case 'categoria_editar':              require_once '../controllers/CategoriaController.php';        categoria_editar($pdo); break;
+    case 'categoria_excluir':             require_once '../controllers/CategoriaController.php';        categoria_excluir($pdo); break;
+    case 'categoria_salvar':              require_once '../controllers/CategoriaController.php';        categoria_salvar($pdo); break;   
     case 'migrar_cartoes':                require_once '../controllers/MigracaoController.php';         migrar_cartoes($pdo); break;
-       
+    case 'migrar_categoria':              require_once '../config/migrations/migrate_categoria.php';    break;
+           
     default: echo '<h1>Sistema de Controle</h1>'; break;
 }
 ?>

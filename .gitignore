@@ -2,3 +2,4 @@
 .git
 composer.lock
 vendor/*
+public/error_log

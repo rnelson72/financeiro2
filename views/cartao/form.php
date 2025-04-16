@@ -19,7 +19,17 @@
 
     <div class="mb-3">
         <label class="form-label">Bandeira:</label>
-        <input type="text" name="bandeira" class="form-control" value="<?= $registro['bandeira'] ?? '' ?>">
+        <select name="bandeira" class="form-select" required>
+            <option value="">Selecione...</option>
+            <?php
+                $bandeiras = ['VISA', 'MASTERCARD', 'ELO', 'HIPERCARD', 'DINERS', 'AMEX'];
+                $valorAtual = $registro['bandeira'] ?? '';
+                foreach ($bandeiras as $b) {
+                    $selected = ($valorAtual === $b) ? 'selected' : '';
+                    echo "<option value=\"$b\" $selected>$b</option>";
+                }
+            ?>
+        </select>
     </div>
 
     <div class="mb-3">
