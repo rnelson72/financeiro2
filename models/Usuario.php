@@ -21,7 +21,7 @@ class Usuario {
     public function inserir($dados) {
         $senhaCriptografada = password_hash($dados['senha_hash'], PASSWORD_DEFAULT);
         $stmt = $this->pdo->prepare("INSERT INTO usuarios (nome, email, senha_hash) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$dados['nome'], $dados['email'], $senhaCriptografada]]);
+        $stmt->execute([$dados['nome'], $dados['email'], $senhaCriptografada]);
     }
 
     public function atualizar($id, $dados) {

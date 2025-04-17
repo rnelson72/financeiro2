@@ -58,6 +58,7 @@ function renderScripts($scripts) {
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="?path=banco">Bancos</a></li>
             <li><a class="dropdown-item" href="?path=categoria">Categorias</a></li>
+            <li><a class="dropdown-item" href="?path=cartao">Cartões</a></li>
           </ul>
         </li>
 

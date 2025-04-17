@@ -51,6 +51,34 @@
     </div>
   </div>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Abertura do modal de finais
+    document.querySelectorAll('.abrir-finais').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault(); // <- ESSENCIAL para impedir o redirecionamento
+            const cartaoId = this.dataset.id;
+
+            // Mostra o modal
+            const modal = new bootstrap.Modal(document.getElementById('modalFinais'));
+            modal.show();
+
+            // Carrega o conteúdo via AJAX
+            const modalBody = document.getElementById('modal-finais-conteudo');
+            modalBody.innerHTML = '<p>Carregando...</p>';
+
+            fetch(`?path=final_cartao_modal&id=${cartaoId}`)
+                .then(res => res.text())
+                .then(html => {
+                    modalBody.innerHTML = html;
+                })
+                .catch(() => {
+                    modalBody.innerHTML = '<p class="text-danger">Erro ao carregar os dados.</p>';
+                });
+        });
+    });
+});
+</script>
 
 <script>
     $(document).on('click', '.abrir-finais', function (e) {
