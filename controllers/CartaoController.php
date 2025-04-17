@@ -80,12 +80,56 @@ function cartao_salvar($pdo) {
     exit;
 }
 
-function final_cartao_modal($pdo) {
-    $cartao_id = $_GET['id'];
+function final_cartao_lista($pdo) {
+    $cartao_id = $_GET['cartao_id'] ?? null;
+
+    $cartaoStmt = $pdo->prepare("SELECT * FROM cartao WHERE id = ?");
+    $cartaoStmt->execute([$cartao_id]);
+    $cartao = $cartaoStmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$cartao) {
+        echo "<div class='alert alert-danger'>Cartão não encontrado.</div>";
+        return;
+    }
+
     $stmt = $pdo->prepare("SELECT * FROM final_cartao WHERE cartao_id = ? ORDER BY final");
     $stmt->execute([$cartao_id]);
     $finais = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    include '../views/cartao/modal.php';
+
+    $titulo = "Finais de Cartão: " . htmlspecialchars($cartao['descricao']);
+    $conteudo = '../views/cartao/finais.php';
+    $scriptsHead = [
+        'https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css'
+    ];
+    $scriptsBody = [
+        'https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js',
+        'https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js',
+        '/financeiro2/public/assets/js/datatables-init.js'
+    ];
+    include '../views/layout.php';
+}
+
+function final_cartao_form($pdo) {
+    $id = $_GET['id'] ?? null;
+    $cartao_id = $_GET['cartao_id'];
+
+    $registro = [
+        'id' => '',
+        'final' => '',
+        'is_virtual' => 0,
+        'titular' => ''
+    ];
+
+    if ($id) {
+        $stmt = $pdo->prepare("SELECT * FROM final_cartao WHERE id = ?");
+        $stmt->execute([$id]);
+        $registro = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    $cartao = $pdo->query("SELECT * FROM cartao WHERE id = $cartao_id")->fetch(PDO::FETCH_ASSOC);
+    $titulo = ($id ? 'Editar' : 'Novo') . " Final do Cartão: " . htmlspecialchars($cartao['descricao']);
+    $conteudo = '../views/cartao/final/form.php';
+    include '../views/layout.php';
 }
 
 function final_cartao_salvar($pdo) {

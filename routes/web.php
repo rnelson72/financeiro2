@@ -29,7 +29,10 @@ switch ($path) {
     case 'cartao_editar':                 require_once '../controllers/CartaoController.php';           cartao_editar($pdo); break;
     case 'cartao_excluir':                require_once '../controllers/CartaoController.php';           cartao_excluir($pdo); break;
     case 'cartao_salvar':                 require_once '../controllers/CartaoController.php';           cartao_salvar($pdo); break;
-    case 'final_cartao_modal':            require_once '../controllers/CartaoController.php';           final_cartao_modal($pdo); break;
+    case 'final_cartao_lista':            require_once '../controllers/CartaoController.php';           final_cartao_lista($pdo); break;
+    case 'final_cartao_novo':
+    case 'final_cartao_editar':           require_once '../controllers/CartaoController.php';           final_cartao_form($pdo); break;
+
     case 'final_cartao_salvar':           require_once '../controllers/CartaoController.php';           final_cartao_salvar($pdo); break;
     case 'final_cartao_excluir':          require_once '../controllers/CartaoController.php';           final_cartao_excluir($pdo); break;
 
