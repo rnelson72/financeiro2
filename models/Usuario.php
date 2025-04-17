@@ -26,7 +26,7 @@ class Usuario {
 
     public function atualizar($id, $dados) {
         if (!empty($dados['senha'])) {
-            $senhaCriptografada = password_hash($dados['senha_hash'], PASSWORD_DEFAULT);
+            $senhaCriptografada = password_hash($dados['senha'], PASSWORD_DEFAULT);
             $sql = "UPDATE usuarios SET nome = ?, email = ?, senha_hash = ?, ativo = ? WHERE id = ?";
             $params = [$dados['nome'], $dados['email'], $senhaCriptografada, $dados['ativo'], $id];
         } else {
@@ -36,4 +36,20 @@ class Usuario {
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($params);
     }
+    public function emailJaExiste($email, $id = null) {
+        // Verifica se o e-mail já está cadastrado para outro usuário
+        $sql = "SELECT COUNT(*) FROM usuarios WHERE email = ?";
+        $params = [$email];
+    
+        if ($id) {
+            $sql .= " AND id != ?";
+            $params[] = $id;
+        }
+    
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+    
+        return $stmt->fetchColumn() > 0;
+    }
+    
 } 

@@ -1,22 +1,6 @@
 <?php
 require_once '../models/Usuario.php';
 
-function emailJaExiste($email, $id = null) {
-    // Verifica se o e-mail já está cadastrado para outro usuário
-    $sql = "SELECT COUNT(*) FROM usuarios WHERE email = ?";
-    $params = [$email];
-
-    if ($id) {
-        $sql .= " AND id != ?";
-        $params[] = $id;
-    }
-
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->execute($params);
-
-    return $stmt->fetchColumn() > 0;
-}
-
 function listar_usuarios($pdo) {
     $model = new Usuario($pdo);
     $usuarios = $model->listarTodos();
@@ -28,6 +12,9 @@ function listar_usuarios($pdo) {
         'https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js',
         '/financeiro2/public/assets/js/datatables-init.js'
     ];
+    $scriptsHead = [
+        'https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css'
+    ];
     include '../views/layout.php';
 }
 
@@ -36,6 +23,9 @@ function usuario_novo($pdo) {
 
     $titulo = 'Novo Usuário';
     $conteudo = '../views/usuario/form.php';
+    $scriptsHead = [
+        'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css'
+    ];
     include '../views/layout.php';
 }
 
@@ -45,6 +35,9 @@ function usuario_editar($pdo) {
 
     $titulo = 'Editar Usuário';
     $conteudo = '../views/usuario/form.php';
+    $scriptsHead = [
+        'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css'
+    ];
     include '../views/layout.php';
 }
 
@@ -70,7 +63,10 @@ function usuario_salvar($pdo) {
         $registro = $dados;
         $titulo = empty($_POST['id']) ? 'Novo Usuário' : 'Editar Usuário';
         $conteudo = '../views/usuario/form.php';
-        include '../views/layout.php';
+        $scriptsHead = [
+            'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css'
+        ];
+            include '../views/layout.php';
         return;
     }
 
