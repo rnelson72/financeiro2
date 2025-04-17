@@ -27,7 +27,7 @@ class Usuario {
     public function atualizar($id, $dados) {
         if (!empty($dados['senha'])) {
             $senhaCriptografada = password_hash($dados['senha'], PASSWORD_DEFAULT);
-            $sql = "UPDATE usuarios SET nome = ?, email = ?, senha_hash = ?, WHERE id = ?";
+            $sql = "UPDATE usuarios SET nome = ?, email = ?, senha_hash = ? WHERE id = ?";
             $params = [$dados['nome'], $dados['email'], $senhaCriptografada, $id];
         } else {
             $sql = "UPDATE usuarios SET nome = ?, email = ? WHERE id = ?";

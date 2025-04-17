@@ -97,7 +97,7 @@ function final_cartao_lista($pdo) {
     $finais = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     $titulo = "Finais de Cartão: " . htmlspecialchars($cartao['descricao']);
-    $conteudo = '../views/cartao/finais.php';
+    $conteudo = '../views/cartao/final/index.php';
     $scriptsHead = [
         'https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css'
     ];
