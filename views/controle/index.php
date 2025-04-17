@@ -37,7 +37,7 @@ foreach ($controles as $ctrl) {
             <div><?= htmlspecialchars($ctrl['descricao']) ?></div>
             <div class="d-flex align-items-center gap-2">
               <span class='badge bg-success'><?= number_format($ctrl['saldo'], 2, ',', '.') ?></span>
-              <a href="?path=controle_lancamentos&id=<?= $ctrl['id'] ?>" class="btn btn-sm btn-outline-secondary"><i class="bi bi-list-ul"></i></a>
+              <a href="?path=controle_lancamentos&controle_id=<?= $ctrl['id'] ?>" class="btn btn-sm btn-outline-secondary"><i class="bi bi-list-ul"></i></a>
               <a href="?path=controle_editar&id=<?= $ctrl['id'] ?>" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil-square"></i></a>
               <a href="?path=controle_excluir&id=<?= $ctrl['id'] ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Tem certeza que deseja excluir este controle?')"><i class="bi bi-trash"></i></a>
             </div>
@@ -71,7 +71,7 @@ foreach ($controles as $ctrl) {
             <div><?= htmlspecialchars($ctrl['descricao']) ?></div>
             <div class="d-flex align-items-center gap-2">
               <span class='badge bg-success'><?= number_format($ctrl['saldo'], 2, ',', '.') ?></span>
-              <a href="?path=controle_lancamentos&id=<?= $ctrl['id'] ?>" class="btn btn-sm btn-outline-secondary"><i class="bi bi-list-ul"></i></a>
+              <a href="?path=controle_lancamentos&controle_id=<?= $ctrl['id'] ?>" class="btn btn-sm btn-outline-secondary"><i class="bi bi-list-ul"></i></a>
               <a href="?path=controle_editar&id=<?= $ctrl['id'] ?>" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil-square"></i></a>
               <a href="?path=controle_excluir&id=<?= $ctrl['id'] ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Tem certeza que deseja excluir este controle?')"><i class="bi bi-trash"></i></a>
             </div>

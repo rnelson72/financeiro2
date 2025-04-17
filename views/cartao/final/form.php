@@ -19,7 +19,7 @@
 
   <div class="col-md-3">
     <label for="titular" class="form-label">Titular</label>
-    <input type="text" class="form-control" id="titular" name="titular" value="<?= htmlspecialchars($registro['titular']) ?>">
+    <input type="text" class="form-control" id="titular" name="titular" value="<?= htmlspecialchars($registro['titular'] ?? '') ?>">
   </div>
 
   <div class="col-md-2 align-self-end">

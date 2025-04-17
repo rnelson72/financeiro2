@@ -1,162 +1,111 @@
 <?php
-require_once '../models/GrupoControle.php';
 require_once '../models/Controle.php';
 
 function listar_controles($pdo) {
-    $grupoModel = new GrupoControle($pdo);
-    $controleModel = new Controle($pdo);
-    $grupos = $grupoModel->listarTodos();
-    $controles = $controleModel->listarTodosComSaldo();
+    $model = new Controle($pdo);
+    $grupos = $model->listarGrupos();
+    $controles = $model->listarTodosComSaldo();
 
     $titulo = "Consulta de Controles";
     $conteudo = __DIR__ . '/../views/controle/index.php';
     include __DIR__ . '/../views/layout.php';
 }
 
-function editar_controle($pdo) {
-    $id = $_GET['id'] ?? null;
-    $stmt = $pdo->prepare('SELECT * FROM controle WHERE id = ?');
-    $stmt->execute([$id]);
-    $registro = $stmt->fetch();
-
-    $grupoModel = new GrupoControle($pdo);
-    $grupos = $grupoModel->listarTodos();
-
-    $titulo = "Editar Controle";
-    $conteudo = __DIR__ . '/../views/controle/form.php';
-    include __DIR__ . '/../views/layout.php';
-}
-
-function excluir_controle($pdo) {
-    $id = $_GET['id'];
-    $stmt = $pdo->prepare("DELETE FROM controle WHERE id = ?");
-    $stmt->execute([$id]);
-    header("Location: ?path=controles");
-    exit;
-}
-
-function salvar_controle($pdo) {
-    $id = $_POST['id'] ?? '';
-    $descricao = $_POST['descricao'] ?? '';
-    $grupo_id = $_POST['grupo_id'] ?? null;
-    $novo_grupo = trim($_POST['novo_grupo'] ?? '');
-    $ativo = isset($_POST['ativo']) ? 1 : 0;
-
-    // Se novo grupo foi informado, cria e usa o ID dele
-    if ($novo_grupo !== '') {
-        $stmt = $pdo->prepare("INSERT INTO grupo_controle (descricao, ativo) VALUES (?, 1)");
-        $stmt->execute([$novo_grupo]);
-        $grupo_id = $pdo->lastInsertId();
-    }
-
-    // Se grupo_id estiver vazio, garante que será NULL no banco
-    if ($grupo_id === '') {
-        $grupo_id = null;
-    }
-
-    if ($id) {
-        $stmt = $pdo->prepare("UPDATE controle SET descricao = ?, grupo_id = ?, ativo = ? WHERE id = ?");
-        $stmt->execute([$descricao, $grupo_id, $ativo, $id]);
-    } else {
-        $stmt = $pdo->prepare("INSERT INTO controle (descricao, grupo_id, ativo) VALUES (?, ?, ?)");
-        $stmt->execute([$descricao, $grupo_id, $ativo]);
-    }
-
-    header('Location: ?path=controles');
-    exit;
-}
-
 function novo_controle($pdo) {
     $registro = [];
-    $grupoModel = new GrupoControle($pdo);
-    $grupos = $grupoModel->listarTodos();
+    $model = new Controle($pdo);
+    $grupos = $model->listarGrupos();
 
     $titulo = "Novo Controle";
     $conteudo = __DIR__ . '/../views/controle/form.php';
     include __DIR__ . '/../views/layout.php';
 }
 
-function lancamentos_por_controle($pdo) {
+function editar_controle($pdo) {
     $id = $_GET['id'];
-    $stmt = $pdo->prepare("SELECT * FROM controle WHERE id = ?");
-    $stmt->execute([$id]);
-    $controle = $stmt->fetch();
+    $model = new Controle($pdo);
+    $registro = $model->buscarControlePorId($id);
+    $grupos = $model->listarGrupos();
 
-    $stmt = $pdo->prepare("SELECT * FROM lancamentos WHERE controle_id = ? ORDER BY data DESC");
-    $stmt->execute([$id]);
-    $lancamentos = $stmt->fetchAll();
+    $titulo = "Editar Controle";
+    $conteudo = __DIR__ . '/../views/controle/form.php';
+    include __DIR__ . '/../views/layout.php';
+}
+
+function salvar_controle($pdo) {
+    $model = new Controle($pdo);
+    $dados = $_POST;
+
+    if (!empty(trim($_POST['novo_grupo'] ?? ''))) {
+        $dados['grupo_id'] = $model->salvarGrupo($_POST['novo_grupo']);
+    }
+
+    $dados['ativo'] = isset($_POST['ativo']) ? 1 : 0;
+    $model->salvarControle($dados);
+
+    header('Location: ?path=controles');
+    exit;
+}
+
+function excluir_controle($pdo) {
+    $id = $_GET['id'];
+    $model = new Controle($pdo);
+    $model->excluirControle($id);
+    header('Location: ?path=controles');
+    exit;
+}
+
+function excluir_grupo($pdo) {
+    $id = $_GET['id'];
+    $model = new Controle($pdo);
+    if (!$model->excluirGrupo($id)) {
+        die('Não é possível excluir o grupo: ele está em uso por controles.');
+    }
+    header('Location: ?path=controles');
+    exit;
+}
+
+function lancamentos_por_controle($pdo) {
+    $id = $_GET['controle_id'];
+    $model = new Controle($pdo);
+    $controle = $model->buscarControlePorId($id);
+    $lancamentos = $model->listarLancamentos($id);
 
     $titulo = "Lançamentos do Controle";
-    $conteudo = __DIR__ . '/../views/controle/lancamentos.php';
+    $conteudo = __DIR__ . '/../views/controle/lancamento/index.php';
     include __DIR__ . '/../views/layout.php';
 }
 
 function novo_lancamento($pdo) {
     $registro = [];
-
     $titulo = "Novo Lançamento";
-    $conteudo = __DIR__ . '/../views/controle/form_lancamento.php';
+    $conteudo = __DIR__ . '/../views/controle/lancamento/form.php';
     include __DIR__ . '/../views/layout.php';
 }
 
 function editar_lancamento($pdo) {
     $id = $_GET['id'];
-    $stmt = $pdo->prepare("SELECT * FROM lancamentos WHERE id = ?");
-    $stmt->execute([$id]);
-    $registro = $stmt->fetch();
+    $model = new Controle($pdo);
+    $registro = $model->buscarLancamentoPorId($id);
 
     $titulo = "Editar Lançamento";
-    $conteudo = __DIR__ . '/../views/controle/form_lancamento.php';
+    $conteudo = __DIR__ . '/../views/controle/lancamento/form.php';
     include __DIR__ . '/../views/layout.php';
 }
 
 function salvar_lancamento($pdo) {
-    $id = $_POST['id'] ?? '';
-    $controle_id = $_POST['controle_id'];
-    $data = $_POST['data'];
-    $descricao = $_POST['descricao'];
-    $valor = $_POST['valor'];
-
-    if ($id) {
-        $stmt = $pdo->prepare("UPDATE lancamentos SET data = ?, descricao = ?, valor = ? WHERE id = ?");
-        $stmt->execute([$data, $descricao, $valor, $id]);
-    } else {
-        $stmt = $pdo->prepare("INSERT INTO lancamentos (controle_id, data, descricao, valor) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$controle_id, $data, $descricao, $valor]);
-    }
-
-    header("Location: ?path=controle_lancamentos&id=$controle_id");
+    $model = new Controle($pdo);
+    $model->salvarLancamento($_POST);
+    $cid = $_POST['controle_id'];
+    header("Location: ?path=controle_lancamentos&id=$cid");
     exit;
 }
 
 function excluir_lancamento($pdo) {
     $id = $_GET['id'];
     $ctrl = $_GET['ctrl'];
-    $stmt = $pdo->prepare("DELETE FROM lancamentos WHERE id = ?");
-    $stmt->execute([$id]);
+    $model = new Controle($pdo);
+    $model->excluirLancamento($id);
     header("Location: ?path=controle_lancamentos&id=$ctrl");
     exit;
 }
-
-function excluir_grupo($pdo) {
-    $id = $_GET['id'];
-
-    // Confere se existem controles usando este grupo
-    $stmt = $pdo->prepare("SELECT COUNT(*) FROM controle WHERE grupo_id = ?");
-    $stmt->execute([$id]);
-    $total = $stmt->fetchColumn();
-
-    if ($total > 0) {
-        // Impede exclusão se ainda houver controles
-        die('Não é possível excluir o grupo: ele está em uso por controles.');
-    }
-
-    // Excluir grupo
-    $stmt = $pdo->prepare("DELETE FROM grupo_controle WHERE id = ?");
-    $stmt->execute([$id]);
-
-    header('Location: ?path=controles');
-    exit;
-}
-
-?>

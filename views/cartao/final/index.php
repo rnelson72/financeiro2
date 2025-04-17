@@ -29,7 +29,7 @@
             <td><?= $item['id'] ?></td>
             <td><?= $item['final'] ?></td>
             <td><?= $item['is_virtual'] ? 'Sim' : 'Não' ?></td>
-            <td><?= htmlspecialchars($item['titular']) ?></td>
+            <td><?= htmlspecialchars($item['titular'] ?? '') ?></td>
             <td>
                 <a href='?path=final_cartao_editar&id=<?= $item['id'] ?>&cartao_id=<?= $cartao['id'] ?>' class='btn btn-sm btn-outline-primary'><i class="bi bi-pencil-square"></i></a>
                 <form method="post" action="?path=final_cartao_excluir" class="d-inline" onsubmit="return confirm('Confirma exclusão?')">
