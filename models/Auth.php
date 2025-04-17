@@ -10,7 +10,6 @@ class Auth {
         $stmt = $this->pdo->prepare("SELECT * FROM usuarios WHERE email = ?  LIMIT 1");
         $stmt->execute([$email]);
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-        var_dump(password_hash('1234', PASSWORD_DEFAULT)); exit;
         
         if ($usuario && password_verify($senha, $usuario['senha_hash'])) {
             return $usuario;
