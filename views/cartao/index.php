@@ -1,19 +1,8 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Cartões de Crédito</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-</head>
-<body class="container mt-4">
-
 <h2 class="mb-4">Cartões de Crédito</h2>
 
 <a href='?path=cartao_novo' class='btn btn-primary mb-3'><i class="bi bi-plus-circle"></i> Novo Cartão</a>
 
-<table id="tabela-cartoes" class='table table-striped table-hover'>
+<table id="tabela-cartoes" class='table datatable table-striped table-hover'>
     <thead class="table-dark">
         <tr>
             <th>ID</th>
@@ -63,29 +52,7 @@
   </div>
 </div>
 
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-
-<!-- Bootstrap Bundle (inclui Popper + modal) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- DataTables -->
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
-
 <script>
-$(document).ready(function () {
-    if ($.fn.DataTable.isDataTable('#tabela-cartoes')) {
-        $('#tabela-cartoes').DataTable().destroy();
-    }
-
-    $('#tabela-cartoes').DataTable({
-        language: {
-            url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json'
-        }
-    });
-
-    // Abertura do modal de finais
     $(document).on('click', '.abrir-finais', function (e) {
         e.preventDefault();
 
@@ -97,7 +64,6 @@ $(document).ready(function () {
             $('#modal-finais-conteudo').html(data);
         });
     });
-});
 </script>
 
 </body>

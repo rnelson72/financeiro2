@@ -2,6 +2,7 @@
     <form id="form-novo-final" class="row g-2">
         <input type="hidden" name="id_final" id="id_final">
         <input type="hidden" name="cartao_id" value="<?= $_GET['id'] ?>">
+        
         <div class="col-md-2">
             <input type="text" name="final" class="form-control" placeholder="Final" maxlength="4" required>
         </div>
@@ -62,17 +63,22 @@
 </table>
 
 <script>
+$(document).ready(function () {
+    // Envio do formulário
     $('#form-novo-final').on('submit', function(e) {
         e.preventDefault();
         $.post('?path=final_cartao_salvar', $(this).serialize(), function() {
             const cartaoId = $('input[name="cartao_id"]').val();
+            $('#form-novo-final')[0].reset();
+            $('#id_final').val('');
+            $('#botao_final').text('Salvar');
             $.get('?path=final_cartao_modal&id=' + cartaoId, function(data) {
                 $('#modal-finais-conteudo').html(data);
             });
         });
     });
-    
-    // Botão editar preenche os campos no topo
+
+    // Preencher campos para edição
     $(document).on('click', '.editar-final', function () {
         const id = $(this).data('id');
         const final = $(this).data('final');
@@ -83,20 +89,21 @@
         $('input[name="final"]').val(final);
         $('input[name="titular"]').val(titular);
         $('input[name="is_virtual"][value="' + isVirtual + '"]').prop('checked', true);
-
-        $('#botao-final').text('Atualizar');
+        $('#botao_final').text('Atualizar');
     });
 
-    $('.excluir-final').click(function() {
-    if (!confirm('Confirma exclusão?')) return;
-    const id = $(this).data('id');
-    const cartaoId = $('input[name="cartao_id"]').val();
+    // Exclusão de final
+    $(document).on('click', '.excluir-final', function () {
+        if (!confirm('Confirma exclusão?')) return;
 
-    $.post('?path=final_cartao_excluir', { id: id }, function() {
-        $.get('?path=final_cartao_modal&id=' + cartaoId, function(data) {
-            $('#modal-finais-conteudo').html(data);
+        const id = $(this).data('id');
+        const cartaoId = $('input[name="cartao_id"]').val();
+
+        $.post('?path=final_cartao_excluir', { id: id }, function() {
+            $.get('?path=final_cartao_modal&id=' + cartaoId, function(data) {
+                $('#modal-finais-conteudo').html(data);
+            });
         });
     });
 });
-
 </script>

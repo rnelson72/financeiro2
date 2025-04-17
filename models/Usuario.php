@@ -20,18 +20,18 @@ class Usuario {
 
     public function inserir($dados) {
         $senhaCriptografada = password_hash($dados['senha_hash'], PASSWORD_DEFAULT);
-        $stmt = $this->pdo->prepare("INSERT INTO usuarios (nome, email, senha_hash, ativo) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$dados['nome'], $dados['email'], $senhaCriptografada, $dados['ativo']]);
+        $stmt = $this->pdo->prepare("INSERT INTO usuarios (nome, email, senha_hash) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$dados['nome'], $dados['email'], $senhaCriptografada]]);
     }
 
     public function atualizar($id, $dados) {
         if (!empty($dados['senha'])) {
             $senhaCriptografada = password_hash($dados['senha'], PASSWORD_DEFAULT);
-            $sql = "UPDATE usuarios SET nome = ?, email = ?, senha_hash = ?, ativo = ? WHERE id = ?";
-            $params = [$dados['nome'], $dados['email'], $senhaCriptografada, $dados['ativo'], $id];
+            $sql = "UPDATE usuarios SET nome = ?, email = ?, senha_hash = ?, WHERE id = ?";
+            $params = [$dados['nome'], $dados['email'], $senhaCriptografada, $id];
         } else {
-            $sql = "UPDATE usuarios SET nome = ?, email = ?, ativo = ? WHERE id = ?";
-            $params = [$dados['nome'], $dados['email'], $dados['ativo'], $id];
+            $sql = "UPDATE usuarios SET nome = ?, email = ? WHERE id = ?";
+            $params = [$dados['nome'], $dados['email'], $id];
         }
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($params);

@@ -8,20 +8,38 @@ function nullIfEmpty($value) {
 function listar_cartoes($pdo) {
     $model = new Cartao($pdo);
     $cartoes = $model->listarTodos();
-    include '../views/cartao/index.php';
+    $scriptsHead = [
+        'https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css'
+    ];
+    
+    $scriptsBody = [
+        'https://code.jquery.com/jquery-3.7.0.min.js',
+        'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js',
+        'https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js',
+        'https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js',
+        '/financeiro2/public/assets/js/datatables-init.js'
+    ];
+    
+    $titulo = 'Cartões de Crédito';
+    $conteudo = '../views/cartao/index.php';
+    include '../views/layout.php';
 }
 
 function cartao_novo($pdo) {
     $registro = [];
     $bancos = $pdo->query("SELECT id, descricao FROM bancos ORDER BY descricao")->fetchAll(PDO::FETCH_ASSOC);
-    include '../views/cartao/form.php';
+    $titulo = 'Novo Cartão';
+    $conteudo = '../views/cartao/form.php';
+    include '../views/layout.php';
 }
 
 function cartao_editar($pdo) {
     $model = new Cartao($pdo);
     $registro = $model->buscarPorId($_GET['id']);
     $bancos = $pdo->query("SELECT id, descricao FROM bancos ORDER BY descricao")->fetchAll(PDO::FETCH_ASSOC);
-    include '../views/cartao/form.php';
+    $titulo = 'Editar Cartão';
+    $conteudo = '../views/cartao/form.php';
+    include '../views/layout.php';
 }
 
 function cartao_excluir($pdo) {
