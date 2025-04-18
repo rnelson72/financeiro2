@@ -1,7 +1,7 @@
 <?php
-require_once '../config/database.php';
+require_once '../database.php';
 require_once 'schema_categoria.php'; // garante a criação
-require_once '../config/legado.php';
+require_once '../legado.php';
 
 function tabelaExiste($pdo, $nome) {
     $stmt = $pdo->prepare("SHOW TABLES LIKE ?");

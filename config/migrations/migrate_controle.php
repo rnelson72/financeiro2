@@ -1,6 +1,6 @@
 <?php
-require_once '../config/database.php';
-require_once '../config/legado.php';
+require_once '../database.php';
+require_once '../legado.php';
 
 // Apaga as tabelas (ordem correta: filho → pai)
 $pdo->exec("SET FOREIGN_KEY_CHECKS=0");

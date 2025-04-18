@@ -1,6 +1,6 @@
 <?php
-require_once '../config/database.php';
-require_once '../config/legado.php';
+require_once '../database.php';
+require_once '../legado.php';
 
 // Limpa e recria a tabela banco
 $pdo->exec("DROP TABLE IF EXISTS banco");
