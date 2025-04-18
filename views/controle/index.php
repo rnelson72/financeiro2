@@ -1,5 +1,9 @@
 <h2 class="mb-4">Consulta de Controles</h2>
 
+<a href="?path=controle_novo" class="btn btn-primary mb-4">
+  <i class="bi bi-plus-circle"></i> Novo Controle
+</a>
+
 <?php
 $controles_por_grupo = [];
 $desagrupados = [];
@@ -12,9 +16,9 @@ foreach ($controles as $ctrl) {
     }
 
     if (empty($ctrl['grupo_id'])) {
-      $desagrupados[] = $ctrl;
+        $desagrupados[] = $ctrl;
     } else {
-      $controles_por_grupo[$ctrl['grupo_id']][] = $ctrl;
+        $controles_por_grupo[$ctrl['grupo_id']][] = $ctrl;
     }
 }
 ?>
@@ -104,7 +108,9 @@ foreach ($controles as $ctrl) {
             <div><?= htmlspecialchars($ctrl['descricao']) ?></div>
             <div class="d-flex align-items-center gap-2">
               <span class='badge bg-secondary'><?= number_format($ctrl['saldo'], 2, ',', '.') ?></span>
+              <a href="?path=controle_lancamentos&controle_id=<?= $ctrl['id'] ?>" class="btn btn-sm btn-outline-secondary"><i class="bi bi-list-ul"></i></a>
               <a href="?path=controle_editar&id=<?= $ctrl['id'] ?>" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil-square"></i></a>
+              <a href="?path=controle_excluir&id=<?= $ctrl['id'] ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Tem certeza que deseja excluir este controle?')"><i class="bi bi-trash"></i></a>
             </div>
           </li>
           <?php endforeach; ?>

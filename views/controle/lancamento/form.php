@@ -2,7 +2,7 @@
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="?path=controles">Controles</a></li>
+    <li class="breadcrumb-item"><a href="?path=controle">Controles</a></li>
     <li class="breadcrumb-item"><a href="?path=controle_lancamentos&id=<?= $registro['controle_id'] ?? $_GET['controle_id'] ?>">Lançamentos</a></li>
     <li class="breadcrumb-item active" aria-current="page"><?= $registro['id'] ? 'Editar' : 'Novo' ?></li>
   </ol>

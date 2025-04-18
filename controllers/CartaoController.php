@@ -133,11 +133,13 @@ function final_cartao_form($pdo) {
 }
 
 function final_cartao_salvar($pdo) {
+    $is_virtual = isset($_POST['is_virtual']) ? 1 : 0;
+
     if (!empty($_POST['id_final'])) {
         $stmt = $pdo->prepare("UPDATE final_cartao SET final = ?, is_virtual = ?, titular = ? WHERE id = ?");
         $stmt->execute([
             $_POST['final'],
-            $_POST['is_virtual'],
+            $is_virtual,
             nullIfEmpty($_POST['titular']),
             $_POST['id_final']
         ]);
@@ -147,15 +149,26 @@ function final_cartao_salvar($pdo) {
         $stmt->execute([
             $_POST['final'],
             $_POST['cartao_id'],
-            $_POST['is_virtual'],
+            $is_virtual,
             nullIfEmpty($_POST['titular'])
         ]);
     }
+
+    header("Location: ?path=final_cartao_lista&cartao_id={$_POST['cartao_id']}");
     exit;
 }
 
+
 function final_cartao_excluir($pdo) {
+    $cartao_id = $_POST['cartao_id'] ?? null;
+    
+    if (!$cartao_id) {
+        die('Cartão não informado.');
+    }
+
     $stmt = $pdo->prepare("DELETE FROM final_cartao WHERE id = ?");
     $stmt->execute([$_POST['id']]);
+
+    header("Location: ?path=final_cartao_lista&cartao_id=$cartao_id");
     exit;
 }
