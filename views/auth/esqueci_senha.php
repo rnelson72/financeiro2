@@ -1,6 +1,6 @@
 <h2 class="mb-4">Recuperar Senha</h2>
 
-<?php if (!empty(\$_GET['erro'])): ?>
+<?php if (!empty($_GET['erro'])): ?>
   <div class="alert alert-danger">Usuário não encontrado com os dados informados.</div>
 <?php endif; ?>
 

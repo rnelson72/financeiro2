@@ -1,7 +1,7 @@
 <h2 class="mb-4">Definir Nova Senha</h2>
 
 <form method="post" action="?path=salvar_nova_senha">
-  <input type="hidden" name="id" value="<?= \$usuario['id'] ?>">
+  <input type="hidden" name="id" value="<?= $usuario['id'] ?>">
 
   <div class="mb-3">
     <label for="senha" class="form-label">Nova Senha</label>
