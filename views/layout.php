@@ -3,7 +3,9 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 
 $rotaAtual = $_GET['path'] ?? '';
 
-if (!isset($_SESSION['usuario_id']) && !in_array($rotaAtual, ['login', 'autenticar'])) {
+$rotas_livres = ['login', 'autenticar', 'esqueci_senha', 'esqueci_senha_post', 'redefinir_senha', 'salvar_nova_senha'];
+
+if (!isset($_SESSION['usuario_id']) && !in_array($rotaAtual, $rotas_livres)) {
     header('Location: ?path=login');
     exit;
 }
