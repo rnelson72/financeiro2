@@ -1,4 +1,6 @@
 <?php
+// Baseado na estrutura original extraída do PostgreSQL em 2025-04-18
+// Ver ddl_postgres_cartao.sql para referência da origem
 
 require_once __DIR__ . '/../database.php';
 

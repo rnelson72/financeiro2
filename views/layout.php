@@ -65,10 +65,16 @@ function renderScripts($scripts) {
           </ul>
         </li>
 
+        <!-- views/layout.php ou menu.php -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown">Administração</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="?path=usuario">Usuários</a></li>
+          <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Administração
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="adminDropdown">
+            <li><a class="dropdown-item" href="?path=migrar_cartao">Migrar Cartões</a></li>
+            <li><a class="dropdown-item" href="?path=migrar_categoria">Migrar Categorias</a></li>
+            <li><a class="dropdown-item" href="?path=migrar_banco">Migrar Bancos</a></li>
+            <li><a class="dropdown-item" href="?path=migrar_controle">Migrar Controles</a></li>
           </ul>
         </li>
       </ul>

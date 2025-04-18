@@ -79,7 +79,7 @@ if ($senha !== $confirmar) {
 }
 
 $hash = password_hash($senha, PASSWORD_DEFAULT);
-$stmt = $pdo->prepare("UPDATE usuarios SET senha = ? WHERE id = ?");
+$stmt = $pdo->prepare("UPDATE usuarios SET senha_hash = ? WHERE id = ?");
 $stmt->execute([$hash, $id]);
 
 header("Location: ?path=login");

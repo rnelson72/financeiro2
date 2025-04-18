@@ -52,8 +52,10 @@ switch ($path) {
     case 'usuario_salvar':              require_once '../controllers/UsuarioController.php';        usuario_salvar($pdo); break;
 
 // --- MIGRAÇÕES ---   
-    case 'migrar_cartoes':              require_once '../controllers/MigracaoController.php';       migrar_cartoes($pdo); break;
-    case 'migrar_categoria':            require_once '../config/migrations/migrate_categoria.php';  break;
+    case 'migrar_cartao':               require_once '../migrations/migrate_cartao.php';            break;
+    case 'migrar_categoria':            require_once '../migrations/migrate_categoria.php';         break;
+    case 'migrar_banco':                require_once '../migrations/migrate_banco.php';             break;
+    case 'migrar_controle':             require_once '../migrations/migrate_controle.php';          break;
 
 // --- AUTENTICAÇÃO ---   
     case 'login':                       require_once '../controllers/AuthController.php';           login($pdo); break;
