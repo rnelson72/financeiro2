@@ -1,10 +1,11 @@
 <?php
-require_once '../database.php';
-require_once '../legado.php';
+<?php
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../config/legado.php';
 
 // Limpa e recria a tabela banco
 $pdo->exec("DROP TABLE IF EXISTS banco");
-require_once 'schema_banco.php';
+require_once __DIR__ . '/../schema_banco.php';
 
 // Lê dados do PostgreSQL
 $dados = $pdoLegado->query("SELECT * FROM bancos")->fetchAll(PDO::FETCH_ASSOC);

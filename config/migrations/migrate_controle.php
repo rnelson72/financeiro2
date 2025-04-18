@@ -1,6 +1,7 @@
 <?php
-require_once '../database.php';
-require_once '../legado.php';
+<?php
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../config/legado.php';
 
 // Apaga as tabelas (ordem correta: filho → pai)
 $pdo->exec("SET FOREIGN_KEY_CHECKS=0");
@@ -9,7 +10,7 @@ $pdo->exec("DROP TABLE IF EXISTS controle");
 $pdo->exec("DROP TABLE IF EXISTS grupo_controle");
 $pdo->exec("SET FOREIGN_KEY_CHECKS=1");
 
-require_once 'schema_controle.php';
+require_once __DIR__ . '/../schema_controle.php';
 
 // Migra GRUPOS
 $grupos = $pdoLegado->query("SELECT * FROM grupo_controle")->fetchAll(PDO::FETCH_ASSOC);

@@ -1,7 +1,8 @@
 <?php
-require_once __DIR__ . '/../database.php';
-require_once __DIR__ . '/../legado.php';
-require_once __DIR__ . '/schema_cartao.php';
+<?php
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../config/legado.php';
+require_once __DIR__ . '/../schema_cartao.php';
 
 function nullIfEmpty($value) {
     return trim($value) === '' ? null : $value;
