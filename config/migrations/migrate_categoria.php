@@ -1,5 +1,4 @@
 <?php
-<?php
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../config/legado.php';
 require_once __DIR__ . '/../schema_categoria.php';
