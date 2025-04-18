@@ -90,3 +90,18 @@ table.dataTable thead th {
       font-size: 1.1rem;
   }
 }
+.postit {
+  width: 250px;
+  padding: 15px;
+  margin: 10px;
+  float: left;
+  border: 1px solid #ccc;
+  box-shadow: 3px 3px 10px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  background: #ffff88;
+  transform: rotate(-2deg);
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+}
+.postit.azul { background: #cce5ff; }
+.postit.amarelo { background: #fff3cd; }
+.postit.vermelho { background: #f8d7da; }

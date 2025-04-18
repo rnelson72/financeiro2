@@ -68,7 +68,7 @@ switch ($path) {
              
     default: 
         $titulo = 'Menu Principal';
-        $conteudo = '../views/menu.php';
+        $conteudo = '../views/dashboard.php';
         include '../views/layout.php';
         break;
  }
