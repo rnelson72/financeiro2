@@ -2,7 +2,7 @@
 require_once 'env.php';
 carregarEnv(__DIR__ . '/../.env');
 
-$dsn = 'pgsql:host=' . getenv('LEGADO_HOST') . ';dbname=' . getenv('LEGADO_NAME') . ';charset=utf8';
+$dsn = 'pgsql:host=' . getenv('LEGADO_HOST') . ';dbname=' . getenv('LEGADO_NAME');
 
 try {
     $pdoLegado = new PDO($dsn, getenv('LEGADO_USER'), getenv('LEGADO_PASS'));
