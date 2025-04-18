@@ -43,7 +43,7 @@ function salvar_controle($pdo) {
     $dados['ativo'] = isset($_POST['ativo']) ? 1 : 0;
     $model->salvarControle($dados);
 
-    header('Location: ?path=controles');
+    header('Location: ?path=controle');
     exit;
 }
 
@@ -51,7 +51,7 @@ function excluir_controle($pdo) {
     $id = $_GET['id'];
     $model = new Controle($pdo);
     $model->excluirControle($id);
-    header('Location: ?path=controles');
+    header('Location: ?path=controle');
     exit;
 }
 
@@ -61,7 +61,7 @@ function excluir_grupo($pdo) {
     if (!$model->excluirGrupo($id)) {
         die('Não é possível excluir o grupo: ele está em uso por controles.');
     }
-    header('Location: ?path=controles');
+    header('Location: ?path=controle');
     exit;
 }
 

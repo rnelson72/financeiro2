@@ -59,7 +59,7 @@ class Controle {
     }
 
     public function excluirGrupo($id) {
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM controle WHERE grupo_id = ?");
+        $stmt = $this->pdo->prepare("SELECT 1 FROM controle WHERE grupo_id = ?");
         $stmt->execute([$id]);
         if ($stmt->fetchColumn() > 0) {
             return false;

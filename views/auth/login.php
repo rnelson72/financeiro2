@@ -20,6 +20,11 @@
           </div>
 
           <button type="submit" class="btn btn-primary w-100">Entrar</button>
+          <div class="text-center mt-2">
+            <a href="?path=esqueci_senha" class="text-decoration-none text-muted">
+              <i class="bi bi-question-circle me-1"></i> Esqueci minha senha
+            </a>
+          </div>
         </form>
       </div>
     </div>
