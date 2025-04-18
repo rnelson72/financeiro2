@@ -2,11 +2,22 @@
 require_once 'env.php';
 carregarEnv(__DIR__ . '/../.env');
 
-$dsn = 'pgsql:host=' . getenv('LEGADO_HOST') . ';dbname=' . getenv('LEGADO_NAME');
+$uri = getenv('LEGADO_STRING');
+$parts = parse_url($uri);
+
+// Confere se tudo foi extraído corretamente
+$host = $parts['host'] ?? '';
+$port = $parts['port'] ?? '5432';
+$user = $parts['user'] ?? '';
+$pass = $parts['pass'] ?? '';
+$dbname = ltrim($parts['path'], '/');
+
+// Monta DSN compatível com PDO
+$dsn = "pgsql:host=$host;port=$port;dbname=$dbname";
 
 try {
-    $pdoLegado = new PDO($dsn, getenv('LEGADO_USER'), getenv('LEGADO_PASS'));
+    $pdoLegado = new PDO($dsn, $user, $pass);
     $pdoLegado->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    exit('Erro ao conectar ao PostgreSQL: ' . $e->getMessage());
+    exit('Erro ao conectar ao PostgreSQL via string do Render: ' . $e->getMessage());
 }
