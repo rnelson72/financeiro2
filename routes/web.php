@@ -56,7 +56,8 @@ switch ($path) {
     case 'migrar_categoria':            require_once '../config/migrations/migrate_categoria.php';  break;
     case 'migrar_banco':                require_once '../config/migrations/migrate_banco.php';      break;
     case 'migrar_controle':             require_once '../config/migrations/migrate_controle.php';   break;
-
+    case 'migrar_movimentacao':         require_once '../config/migrations/migrate_movimentacao.php'; break;
+    
 // --- AUTENTICAÇÃO ---   
     case 'login':                       require_once '../controllers/AuthController.php';           login($pdo); break;
     case 'autenticar':                  require_once '../controllers/AuthController.php';           autenticar($pdo); break;
@@ -65,7 +66,14 @@ switch ($path) {
     case 'esqueci_senha_post':          require_once '../controllers/AuthController.php';           esqueci_senha_post($pdo); break;
     case 'redefinir_senha':             require_once '../controllers/AuthController.php';           redefinir_senha($pdo); break;
     case 'salvar_nova_senha':           require_once '../controllers/AuthController.php';           salvar_nova_senha($pdo); break;
-             
+
+// --- MOVIMENTAÇÃO ---   
+    case 'movimentacao':                require_once '../controllers/MovimentacaoController.php';   listar_movimentacoes($pdo);        break;
+    case 'movimentacao_nova':           require_once '../controllers/MovimentacaoController.php';   movimentacao_nova($pdo);        break;
+    case 'movimentacao_editar':         require_once '../controllers/MovimentacaoController.php';   movimentacao_editar($pdo);        break;
+    case 'movimentacao_excluir':        require_once '../controllers/MovimentacaoController.php';   movimentacao_excluir($pdo);        break;
+    case 'movimentacao_salvar':         require_once '../controllers/MovimentacaoController.php';   movimentacao_salvar($pdo);        break;
+    
     default: 
         $titulo = 'Menu Principal';
         $conteudo = '../views/dashboard.php';

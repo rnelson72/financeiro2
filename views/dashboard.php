@@ -41,11 +41,17 @@ foreach ($cartoes as $cartao) {
 <div class="d-flex flex-wrap">
     <!-- Post-it: Melhor cartão -->
     <div class="postit azul">
-        <h5>💳 Melhor cartão p/ hoje</h5>
+    <h5>💳 Melhor cartão p/ hoje</h5>
+        <?php
+        // Ordena por fechamento decrescente
+        usort($melhoresParaCompra, fn($a, $b) => $b['dia_fechamento'] <=> $a['dia_fechamento']);
+        ?>
         <?php if ($melhoresParaCompra): ?>
             <ul>
-                <?php foreach ($melhoresParaCompra as $c): ?>
-                    <li><?= $c['descricao'] ?> (fechou dia <?= $c['dia_fechamento'] ?>)</li>
+                <?php foreach ($melhoresParaCompra as $index => $c): ?>
+                    <li<?= $index === 0 ? ' style="color:red; font-weight:bold;"' : '' ?>>
+                        <?= $c['descricao'] ?> (dia <?= $c['dia_fechamento'] ?>)<?= $index === 0 ? ' 🔥 Use esse!' : '' ?>
+                    </li>
                 <?php endforeach; ?>
             </ul>
         <?php else: ?>

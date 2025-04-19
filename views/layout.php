@@ -64,6 +64,14 @@ function renderScripts($scripts) {
             <li><a class="dropdown-item" href="?path=controle">Controles</a></li>
           </ul>
         </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="financeiroDropdown" role="button" data-bs-toggle="dropdown">
+            Financeiro
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="financeiroDropdown">
+            <li><a class="dropdown-item" href="?path=movimentacao">Movimentação</a></li>
+          </ul>
+        </li>
 
         <!-- views/layout.php ou menu.php -->
         <li class="nav-item dropdown">
@@ -75,6 +83,7 @@ function renderScripts($scripts) {
             <li><a class="dropdown-item" href="?path=migrar_categoria">Migrar Categorias</a></li>
             <li><a class="dropdown-item" href="?path=migrar_banco">Migrar Bancos</a></li>
             <li><a class="dropdown-item" href="?path=migrar_controle">Migrar Controles</a></li>
+            <li><a class="dropdown-item" href="?path=migrar_movimentacao">Migrar Mov & Despesas</a></li>
           </ul>
         </li>
       </ul>
