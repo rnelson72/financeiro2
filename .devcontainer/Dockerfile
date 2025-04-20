@@ -26,3 +26,4 @@ COPY init.sql /tmp/init.sql
 RUN service mysql start && \
     sleep 5 && \
     mysql -u root < /tmp/init.sql
+    mysql -u root meu_banco < /tmp/seed.sql
