@@ -20,7 +20,7 @@ RUN mkdir -p /var/run/mysqld && \
     chmod 755 /var/run/mysqld
 
 # Copia script de inicialização
-COPY .devcontainer/init.sql /tmp/init.sql
+COPY init.sql /tmp/init.sql
 
 # Aplica o script com MySQL iniciado
 RUN service mysql start && \
