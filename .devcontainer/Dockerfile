@@ -19,11 +19,10 @@ RUN mkdir -p /var/run/mysqld && \
     chown -R mysql:mysql /var/run/mysqld && \
     chmod 755 /var/run/mysqld
 
-# Copia script SQL de inicialização
-COPY init.sql /tmp/init.sql
+# Copia script de inicialização
+COPY .devcontainer/init.sql /tmp/init.sql
 
-# Aplica script SQL com MySQL iniciado
+# Aplica o script com MySQL iniciado
 RUN service mysql start && \
     sleep 5 && \
     mysql -u root < /tmp/init.sql
-    mysql -u root meu_banco < /tmp/seed.sql
