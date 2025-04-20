@@ -1,5 +1,4 @@
 <?php
-require_once '../models/Cartao.php';
 
 function nullIfEmpty($value) {
     return trim($value) === '' ? null : $value;

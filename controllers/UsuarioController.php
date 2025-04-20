@@ -1,5 +1,4 @@
 <?php
-require_once '../models/Usuario.php';
 
 function listar_usuarios($pdo) {
     $model = new Usuario($pdo);

@@ -1,5 +1,4 @@
 <?php
-require_once '../models/Controle.php';
 
 function listar_controles($pdo) {
     $model = new Controle($pdo);

@@ -1,5 +1,4 @@
 <?php
-require_once '../models/Banco.php';
 
 function listar_bancos($pdo) {
     $model = new Banco($pdo);

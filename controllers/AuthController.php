@@ -1,5 +1,4 @@
 <?php
-require_once '../models/Auth.php';
 
 function login($pdo) {
     $titulo = 'Login';

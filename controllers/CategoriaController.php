@@ -1,5 +1,4 @@
 <?php
-require_once '../models/Categoria.php';
 
 function listar_categorias($pdo) {
     $model = new Categoria($pdo);

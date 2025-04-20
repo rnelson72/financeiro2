@@ -13,3 +13,16 @@ RUN a2enmod rewrite
 
 # Ajusta diretório raiz do Apache
 RUN rm -rf /var/www/html && ln -s /workspaces/$(basename $PWD)/public /var/www/html
+
+# Garante permissões corretas para o socket do MySQL
+RUN mkdir -p /var/run/mysqld && \
+    chown -R mysql:mysql /var/run/mysqld && \
+    chmod 755 /var/run/mysqld
+
+# Copia script SQL de inicialização
+COPY init.sql /tmp/init.sql
+
+# Aplica script SQL com MySQL iniciado
+RUN service mysql start && \
+    sleep 5 && \
+    mysql -u root < /tmp/init.sql

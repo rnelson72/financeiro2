@@ -4,8 +4,7 @@
     "dockerfile": "Dockerfile"
   },
   "forwardPorts": [80, 3306],
-  "postCreateCommand": "sudo service apache2 start && sudo service mysql start && sudo mysql -e \"ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'senha123'; FLUSH PRIVILEGES; CREATE DATABASE IF NOT EXISTS meu_banco;\"",
-  "features": {},
+  "postCreateCommand": "sudo service apache2 start && sudo service mysql restart",
   "customizations": {
     "vscode": {
       "extensions": [

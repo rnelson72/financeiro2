@@ -1,5 +1,4 @@
 <?php
-require_once '../models/Movimentacao.php';
 
 function listar_movimentacoes($pdo) {
     $model = new Movimentacao($pdo);
@@ -14,9 +13,6 @@ function listar_movimentacoes($pdo) {
 }
 
 function movimentacao_nova($pdo) {
-    require_once '../models/Categoria.php';
-    require_once '../models/Banco.php';
-
     $registro = [];
     $contexto = capturar_contexto();
 
