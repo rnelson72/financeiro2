@@ -1,3 +1,4 @@
 {
-    "php.debug.executablePath": "C:\\php"
+    "php.debug.executablePath": "/usr/bin/php"
 }
+  
