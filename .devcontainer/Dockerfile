@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/devcontainers/base:ubuntu
 
-# Instala PHP, Apache e MySQL
+# Instala PHP, Apache e MySQL com dependências necessárias
 RUN apt-get update && apt-get install -y \
   php \
   php-mysql \
@@ -8,8 +8,8 @@ RUN apt-get update && apt-get install -y \
   mysql-server \
   && apt-get clean
 
-# Habilita mod_rewrite e outras configs do Apache
+# Ativa o mod_rewrite do Apache
 RUN a2enmod rewrite
 
-# Configura diretório raiz
+# Ajusta diretório raiz do Apache
 RUN rm -rf /var/www/html && ln -s /workspaces/$(basename $PWD)/public /var/www/html
