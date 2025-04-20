@@ -29,14 +29,26 @@ $linkVoltar = '?' . http_build_query(array_merge(['path' => 'movimentacao'], cap
 
     <div class="col-md-3">
         <label for="categoria_id" class="form-label">Categoria</label>
-        <input type="number" name="categoria_id" id="categoria_id" class="form-control"
-               value="<?= $registro['categoria_id'] ?? '' ?>">
+        <select name="categoria_id" id="categoria_id" class="form-select">
+            <option value="">Selecione...</option>
+            <?php foreach ($categorias as $c): ?>
+                <option value="<?= $c['id'] ?>" <?= ($registro['categoria_id'] ?? '') == $c['id'] ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($c['descricao']) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
     </div>
 
     <div class="col-md-3">
         <label for="conta_id" class="form-label">Conta</label>
-        <input type="number" name="conta_id" id="conta_id" class="form-control"
-               value="<?= $registro['conta_id'] ?? '' ?>">
+        <select name="conta_id" id="conta_id" class="form-select">
+            <option value="">Selecione...</option>
+            <?php foreach ($contas as $conta): ?>
+                <option value="<?= $conta['id'] ?>" <?= ($registro['conta_id'] ?? '') == $conta['id'] ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($conta['descricao']) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
     </div>
 
     <div class="col-md-3">

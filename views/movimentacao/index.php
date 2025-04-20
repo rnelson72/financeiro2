@@ -90,8 +90,8 @@ function destaque_valor($valor) {
                 <td><?= date('d/m/Y', strtotime($mov['data'])) ?></td>
                 <td><?= htmlspecialchars($mov['descricao']) ?></td>
                 <td><?= destaque_valor($mov['valor']) ?></td>
-                <td><?= $mov['conta_id'] ?></td>
-                <td><?= $mov['categoria_id'] ?></td>
+                <td><?= htmlspecialchars($mov['conta_nome'] ?? '-') ?></td>
+                <td><?= htmlspecialchars($mov['categoria_nome'] ?? '-') ?></td>
                 <td><?= $mov['codigo_pagamento'] ?></td>
                 <td>
                     <a href="<?= link_contextual(['path' => 'movimentacao_editar', 'id' => $mov['id']]) ?>" class="btn btn-sm btn-warning">✎</a>

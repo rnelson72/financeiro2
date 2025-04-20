@@ -1,6 +1,7 @@
 <?php
 $path = $_GET['path'] ?? '';
 require_once '../config/database.php';
+require_once '../config/autoload.php';
 
 switch ($path) {
 

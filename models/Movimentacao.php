@@ -44,7 +44,18 @@ class Movimentacao {
         $limite = $contexto['qtde_linhas'];
         $offset = ($contexto['pagina'] - 1) * $limite;
 
-        $sql = "SELECT * FROM movimentacao $where ORDER BY $ordem LIMIT $limite OFFSET $offset";
+        $sql = "
+            SELECT m.*, 
+                    c.descricao AS categoria_nome,
+                    b.descricao AS conta_nome
+                FROM movimentacao m
+                LEFT JOIN categoria c ON m.categoria_id = c.id
+                LEFT JOIN banco b ON m.conta_id = b.id
+                $where
+                ORDER BY $ordem
+                LIMIT $limite OFFSET $offset
+            ";
+
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($params);
 

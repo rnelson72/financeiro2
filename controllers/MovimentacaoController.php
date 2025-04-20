@@ -14,8 +14,20 @@ function listar_movimentacoes($pdo) {
 }
 
 function movimentacao_nova($pdo) {
+    require_once '../models/Categoria.php';
+    require_once '../models/Banco.php';
+
     $registro = [];
     $contexto = capturar_contexto();
+
+    $categoriaModel = new Categoria($pdo);
+    $bancoModel = new Banco($pdo);
+    $categorias = $categoriaModel->listarTodos();
+    $contas = $bancoModel->listarTodos();
+
+    // Recupera o último código_pagamento
+    $ultimo = $pdo->query("SELECT MAX(codigo_pagamento) AS ultimo FROM movimentacao")->fetch(PDO::FETCH_ASSOC);
+    $registro['codigo_pagamento'] = ($ultimo['ultimo'] ?? 0) + 1;
 
     $titulo = 'Nova Movimentação';
     $conteudo = '../views/movimentacao/form.php';
