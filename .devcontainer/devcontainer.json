@@ -1,0 +1,17 @@
+{
+    "name": "PHP + MySQL",
+    "build": {
+      "dockerfile": "Dockerfile"
+    },
+    "forwardPorts": [80, 3306],
+    "postCreateCommand": "sudo service apache2 start && sudo service mysql start",
+    "features": {},
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "felixfbecker.php-debug",
+          "bmewburn.vscode-intelephense-client"
+        ]
+      }
+    }
+  }
