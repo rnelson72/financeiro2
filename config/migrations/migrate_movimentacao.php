@@ -1,14 +1,15 @@
 <?php
 require_once __DIR__ . '/../../config/database.php';
-require_once __DIR__ . '/../../config/legado.php';
+// require_once __DIR__ . '/../../config/legado.php';
 require_once __DIR__ . '/schema_movimentacao.php';
 
 echo "<h3>Iniciando migração de movimentações e faturas...</h3>";
 
 // Consulta todos os registros do legado
-$stmt = $pdoLegado->query("
-    SELECT id, data AS data_pagamento, data_compra, valor, descricao, cartao_id, codigo_pagamento,
-           categoria_id, conta_id
+// $stmt = $pdoLegado->query("
+$stmt = $pdo->query("
+    SELECT id, data AS data_pagamento, data_compra, valor, descricao, cartao_id, codigo_pagamento, 
+           conta_id AS categoria_id, banco_id AS conta_id
     FROM movimentacao_financeira
     ORDER BY codigo_pagamento, cartao_id, data_compra
 ");

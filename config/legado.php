@@ -13,7 +13,7 @@ $pass = $parts['pass'] ?? '';
 $dbname = ltrim($parts['path'], '/');
 
 // Monta DSN compatível com PDO
-$dsn = "pgsql:host=$host;port=$port;dbname=$dbname";
+$dsn = "pgsql:host=$host;port=$port;dbname=$dbname;sslmode=verify-full";
 
 try {
     $pdoLegado = new PDO($dsn, $user, $pass);

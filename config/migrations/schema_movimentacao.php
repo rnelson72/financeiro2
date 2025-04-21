@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../database.php';
 
 $pdo->exec("DROP TABLE IF EXISTS compras");
 $pdo->exec("DROP TABLE IF EXISTS fatura");
@@ -15,9 +15,9 @@ $pdo->exec("CREATE TABLE movimentacao (
     codigo_pagamento INT,
     fatura_id INT,
     FOREIGN KEY (categoria_id) REFERENCES categoria(id),
-    FOREIGN KEY (conta_id) REFERENCES conta(id),
-    FOREIGN KEY (fatura_id) REFERENCES fatura(id)
+    FOREIGN KEY (conta_id) REFERENCES bancos(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
+//     FOREIGN KEY (fatura_id) REFERENCES fatura(id)
 
 $pdo->exec("CREATE TABLE fatura (
     id INT AUTO_INCREMENT PRIMARY KEY,

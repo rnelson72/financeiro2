@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . '/../../config/database.php';
-require_once __DIR__ . '/../../config/legado.php';
-require_once __DIR__ . '/../schema_cartao.php';
+require_once __DIR__ . '/../../database.php';
+//require_once __DIR__ . '/../../config/legado.php';
+require_once __DIR__ . '/schema_cartao.php';
 
 function nullIfEmpty($value) {
     return trim($value) === '' ? null : $value;
@@ -35,7 +35,8 @@ $pdo->exec("SET FOREIGN_KEY_CHECKS=1");
 require_once __DIR__ . '/schema_cartao.php';
 
 // Lê os cartões antigos do PostgreSQL
-$cartoes_antigos = $pdoLegado->query("SELECT * FROM cartoes_credito")->fetchAll(PDO::FETCH_ASSOC);
+//$cartoes_antigos = $pdoLegado->query("SELECT * FROM cartoes_credito")->fetchAll(PDO::FETCH_ASSOC);
+$cartoes_antigos = $pdo->query("SELECT * FROM cartoes_credito")->fetchAll(PDO::FETCH_ASSOC);
 
 foreach ($cartoes_antigos as $registro) {
     $id = $registro['id'];
