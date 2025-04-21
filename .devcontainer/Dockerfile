@@ -12,7 +12,9 @@ RUN apt-get update && apt-get install -y \
 RUN a2enmod rewrite
 
 # Ajusta diretório raiz do Apache
-RUN rm -rf /var/www/html && ln -s /workspaces/$(basename $PWD)/public /var/www/html
+# RUN rm -rf /var/www/html && ln -s /workspaces/$(basename $PWD)/public /var/www/html
+# Remove o diretório/link html antigo e cria o link simbólico CORRETO
+RUN rm -rf /var/www/html && ln -s /workspaces/financeiro2/public /var/www/html
 
 # Garante permissões corretas para o socket do MySQL
 RUN mkdir -p /var/run/mysqld && \
