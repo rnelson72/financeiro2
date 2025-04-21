@@ -9,11 +9,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   php \
   php-cli \
   php-mysql \
-  php-dev \  # <-- Necessário para PECL e compilar extensões
+  # Necessário para PECL e compilar extensões:
+  php-dev \
+  php-pear \
   apache2 \
   mysql-server \
-  # Ferramentas de build
-  build-essential \ # <-- Necessário para compilar (PECL)
+  # Ferramentas de build (Necessário para compilar PECL):
+  build-essential \
   # Limpeza
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
