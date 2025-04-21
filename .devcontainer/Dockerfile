@@ -9,6 +9,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   php \
   php-cli \
   php-mysql \
+  php8.1-pgsql \
+  postgresql-cliente \
   # Necessário para PECL e compilar extensões:
   php-dev \
   php-pear \

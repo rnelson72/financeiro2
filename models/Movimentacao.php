@@ -13,10 +13,24 @@ class Movimentacao {
 
         // Filtro por busca
         if (!empty($contexto['busca'])) {
-            $filtros_sql[] = "(descricao LIKE ?)";
-            $params[] = '%' . $contexto['busca'] . '%';
+            $filtros_sql[] = "(
+                m.descricao LIKE ?
+                OR DATE_FORMAT(m.data, '%d/%m/%Y') LIKE ?
+                OR CAST(m.valor AS CHAR) LIKE ?
+                OR CAST(m.codigo_pagamento AS CHAR) LIKE ?
+                OR c.descricao LIKE ?
+                OR b.descricao LIKE ?
+            )";
+            $busca = '%' . $contexto['busca'] . '%';
+            // Repete para cada campo buscado acima
+            $params[] = $busca; // descricao
+            $params[] = $busca; // data
+            $params[] = $busca; // valor
+            $params[] = $busca; // codigo_pagamento
+            $params[] = $busca; // categoria_nome (c.descricao)
+            $params[] = $busca; // conta_nome (b.descricao)
         }
-
+        
         // Filtros adicionais: mês, ano, conta
         if (!empty($contexto['filtros']['mes'])) {
             $filtros_sql[] = "MONTH(data) = ?";
@@ -50,7 +64,7 @@ class Movimentacao {
                     b.descricao AS conta_nome
                 FROM movimentacao m
                 LEFT JOIN categoria c ON m.categoria_id = c.id
-                LEFT JOIN banco b ON m.conta_id = b.id
+                LEFT JOIN bancos b ON m.conta_id = b.id
                 $where
                 ORDER BY $ordem
                 LIMIT $limite OFFSET $offset

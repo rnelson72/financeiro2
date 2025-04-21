@@ -2,7 +2,9 @@
 
 function listar_movimentacoes($pdo) {
     $model = new Movimentacao($pdo);
+    $bancoModel = new Banco($pdo);
     $contexto = capturar_contexto();
+    $contas = $bancoModel->listarTodos();
 
     $movimentacoes = $model->listarComContexto($contexto);
     $total_registros = $model->contarComContexto($contexto);
@@ -34,6 +36,11 @@ function movimentacao_editar($pdo) {
     $model = new Movimentacao($pdo);
     $registro = $model->buscarPorId($_GET['id']);
     $contexto = capturar_contexto();
+
+    $categoriaModel = new Categoria($pdo);
+    $bancoModel = new Banco($pdo);
+    $categorias = $categoriaModel->listarTodos();
+    $contas = $bancoModel->listarTodos();
 
     $titulo = 'Editar Movimentação';
     $conteudo = '../views/movimentacao/form.php';

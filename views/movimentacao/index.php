@@ -38,7 +38,14 @@ function destaque_valor($valor) {
         </select>
     </div>
     <div class="col-md-3">
-        <input type="number" name="conta_id" value="<?= htmlspecialchars($contexto['filtros']['conta_id']) ?>" class="form-control" placeholder="ID da Conta">
+        <select name="conta_id" id="conta_id" class="form-select">
+            <option value="">Selecione o Banco</option>
+            <?php foreach ($contas as $conta): ?>
+                <option value="<?= $conta['id'] ?>" <?= $contexto['filtros']['conta_id'] == $conta['id'] ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($conta['descricao']) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
     </div>
     <div class="col-md-2">
         <button class="btn btn-primary w-100">Filtrar</button>
@@ -89,7 +96,7 @@ function destaque_valor($valor) {
                 <td><?= $mov['id'] ?></td>
                 <td><?= date('d/m/Y', strtotime($mov['data'])) ?></td>
                 <td><?= htmlspecialchars($mov['descricao']) ?></td>
-                <td><?= destaque_valor($mov['valor']) ?></td>
+                <td class="text-end"><?= destaque_valor($mov['valor']) ?></td>
                 <td><?= htmlspecialchars($mov['conta_nome'] ?? '-') ?></td>
                 <td><?= htmlspecialchars($mov['categoria_nome'] ?? '-') ?></td>
                 <td><?= $mov['codigo_pagamento'] ?></td>
@@ -103,7 +110,7 @@ function destaque_valor($valor) {
     <tfoot>
         <tr>
             <th colspan="3">Total da Página:</th>
-            <th><?= destaque_valor($total) ?></th>
+            <th class="text-end"><?= destaque_valor($total) ?></th>
             <th colspan="4"></th>
         </tr>
     </tfoot>
