@@ -2487,51 +2487,20 @@ INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha_hash`, `criado_em`) VALUES
 
 -- --------------------------------------------------------
 
---
--- Stand-in structure for view `vw_controle`
--- (See below for the actual view)
---
-CREATE TABLE `vw_controle` (
-`id` int(11)
-,`descricao` varchar(100)
-,`ativo` tinyint(1)
-,`grupo_id` int(11)
-,`grupo` varchar(255)
-,`saldo` decimal(34,2)
-);
-
--- --------------------------------------------------------
-
---
--- Stand-in structure for view `vw_migra_fatura`
--- (See below for the actual view)
---
-CREATE TABLE `vw_migra_fatura` (
-`data` date
-,`codigo_pagamento` int(11)
-,`cartao_id` int(11)
-,`descricao` varchar(20)
-,`qtde` bigint(21)
-,`total` double
-);
-
--- --------------------------------------------------------
 
 --
 -- Structure for view `vw_controle`
 --
-DROP TABLE IF EXISTS `vw_controle`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`tecn8763`@`localhost` SQL SECURITY DEFINER VIEW `vw_controle`  AS SELECT `c`.`id` AS `id`, `c`.`descricao` AS `descricao`, `c`.`ativo` AS `ativo`, `c`.`grupo_id` AS `grupo_id`, `g`.`descricao` AS `grupo`, coalesce(sum(`l`.`valor`),0) AS `saldo` FROM ((`controle` `c` left join `lancamentos` `l` on((`l`.`controle_id` = `c`.`id`))) left join `grupo_controle` `g` on((`g`.`id` = `c`.`grupo_id`))) GROUP BY `c`.`id`, `c`.`descricao`, `c`.`ativo`, `c`.`grupo_id`, `g`.`descricao` ;
+CREATE VIEW `vw_controle`  AS SELECT `c`.`id` AS `id`, `c`.`descricao` AS `descricao`, `c`.`ativo` AS `ativo`, `c`.`grupo_id` AS `grupo_id`, `g`.`descricao` AS `grupo`, coalesce(sum(`l`.`valor`),0) AS `saldo` FROM ((`controle` `c` left join `lancamentos` `l` on((`l`.`controle_id` = `c`.`id`))) left join `grupo_controle` `g` on((`g`.`id` = `c`.`grupo_id`))) GROUP BY `c`.`id`, `c`.`descricao`, `c`.`ativo`, `c`.`grupo_id`, `g`.`descricao` ;
 
 -- --------------------------------------------------------
 
 --
 -- Structure for view `vw_migra_fatura`
 --
-DROP TABLE IF EXISTS `vw_migra_fatura`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`tecn8763`@`localhost` SQL SECURITY DEFINER VIEW `vw_migra_fatura`  AS SELECT `m`.`data` AS `data`, `m`.`codigo_pagamento` AS `codigo_pagamento`, `m`.`cartao_id` AS `cartao_id`, `c`.`descricao` AS `descricao`, count(0) AS `qtde`, sum(`m`.`valor`) AS `total` FROM (`movimentacao_financeira` `m` left join `cartoes_credito` `c` on((`c`.`id` = `m`.`cartao_id`))) WHERE (`m`.`cartao_id` is not null) GROUP BY `m`.`data`, `m`.`codigo_pagamento`, `m`.`cartao_id`, `c`.`descricao` ;
+CREATE VIEW `vw_migra_fatura`  AS SELECT `m`.`data` AS `data`, `m`.`codigo_pagamento` AS `codigo_pagamento`, `m`.`cartao_id` AS `cartao_id`, `c`.`descricao` AS `descricao`, count(0) AS `qtde`, sum(`m`.`valor`) AS `total` FROM (`movimentacao_financeira` `m` left join `cartoes_credito` `c` on((`c`.`id` = `m`.`cartao_id`))) WHERE (`m`.`cartao_id` is not null) GROUP BY `m`.`data`, `m`.`codigo_pagamento`, `m`.`cartao_id`, `c`.`descricao` ;
 
 --
 -- Indexes for dumped tables
