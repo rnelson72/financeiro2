@@ -24,6 +24,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `meu_banco`
 --
+USE meu_banco;
 
 DELIMITER $$
 --
