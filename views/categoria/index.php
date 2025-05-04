@@ -4,21 +4,15 @@
     <thead class="table-dark">
         <tr>
             <th>ID</th>
-            <th>Conta</th>
             <th>Descrição</th>
-            <th>Tipo</th>
-            <th>Ativo</th>
             <th>Ações</th>
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($categorias as $item): ?>
+        <?php foreach ($registros as $item): ?>
             <tr>
                 <td><?= $item['id'] ?></td>
-                <td><?= htmlspecialchars($item['conta']) ?></td>
                 <td><?= htmlspecialchars($item['descricao']) ?></td>
-                <td><?= $item['tipo'] ?></td>
-                <td><?= $item['ativo'] ? 'Sim' : 'Não' ?></td>
                 <td>
                     <a href="?path=categoria_editar&id=<?= $item['id'] ?>" class="btn btn-sm btn-outline-primary">Editar</a>
                     <a href="?path=categoria_excluir&id=<?= $item['id'] ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Confirma exclusão?')">Excluir</a>

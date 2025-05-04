@@ -3,7 +3,7 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="?path=cartao">Cartões</a></li>
-    <li class="breadcrumb-item"><a href="?path=final_cartao_lista&cartao_id=<?= $cartao['id'] ?>">Finais</a></li>
+    <li class="breadcrumb-item"><a href="?path=final_cartao_listar&cartao_id=<?= $cartao['id'] ?>">Finais</a></li>
     <li class="breadcrumb-item active" aria-current="page"><?= $registro['id'] ? 'Editar' : 'Novo' ?></li>
   </ol>
 </nav>

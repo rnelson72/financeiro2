@@ -33,13 +33,13 @@ function renderScripts($scripts) {
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title><?= $titulo ?? 'Sistema' ?></title>
+    <title><?= $titulo ?? 'Sistema Financeiro' ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap e ícones -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="/financeiro2/public/assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
 
     <!-- Scripts HEAD adicionais -->
     <?php renderScripts($scriptsHead ?? []); ?>
@@ -48,46 +48,39 @@ function renderScripts($scripts) {
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
   <div class="container">
-    <a class="navbar-brand" href="?path=menu">Financeiro2</a>
+    <a class="navbar-brand" href="?path=dashboard">Financeiro</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="menuPrincipal">
       <ul class="navbar-nav me-auto">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="cadastrosDropdown" role="button" data-bs-toggle="dropdown">Cadastros</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="?path=banco">Bancos</a></li>
-            <li><a class="dropdown-item" href="?path=categoria">Categorias</a></li>
-            <li><a class="dropdown-item" href="?path=cartao">Cartões</a></li>
-            <li><a class="dropdown-item" href="?path=controle">Controles</a></li>
-          </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="financeiroDropdown" role="button" data-bs-toggle="dropdown">
-            Financeiro
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="financeiroDropdown">
-            <li><a class="dropdown-item" href="?path=movimentacao">Movimentação</a></li>
-          </ul>
-        </li>
-
-        <!-- views/layout.php ou menu.php -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Administração
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="adminDropdown">
-            <li><a class="dropdown-item" href="?path=migrar_cartao">Migrar Cartões</a></li>
-            <li><a class="dropdown-item" href="?path=migrar_categoria">Migrar Categorias</a></li>
-            <li><a class="dropdown-item" href="?path=migrar_banco">Migrar Bancos</a></li>
-            <li><a class="dropdown-item" href="?path=migrar_controle">Migrar Controles</a></li>
-            <li><a class="dropdown-item" href="?path=migrar_movimentacao">Migrar Mov & Despesas</a></li>
-          </ul>
-        </li>
+        <?php
+        $menu_agrupado = $_SESSION['menu_agrupado'] ?? [];
+        echo '<!-- DEBUG do menu_agrupado: ' . print_r($menu_agrupado, true) . ' -->';
+        foreach ($menu_agrupado as $grupo => $itens): ?>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle"
+               href="#"
+               id="<?= strtolower(preg_replace('/\s+/', '', $grupo)) ?>Dropdown"
+               role="button" data-bs-toggle="dropdown">
+              <?= htmlspecialchars($grupo) ?>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="<?= strtolower(preg_replace('/\s+/', '', $grupo)) ?>Dropdown">
+              <?php foreach ($itens as $item): ?>
+                <li>
+                  <a class="dropdown-item" href="?path=<?= htmlspecialchars($item['rota']) ?>">
+                    <?php if (!empty($item['icone'])): ?>
+                      <i class="<?= htmlspecialchars($item['icone']) ?>"></i>
+                    <?php endif ?>
+                    <?= htmlspecialchars($item['nome']) ?>
+                  </a>
+                </li>
+              <?php endforeach ?>
+            </ul>
+          </li>
+        <?php endforeach ?>
       </ul>
-
       <ul class="navbar-nav ms-auto">
         <li class="nav-item me-3 text-white">
           <span><i class="bi bi-person-circle"></i> <?= $_SESSION['usuario_nome'] ?? 'Usuário' ?></span>
@@ -99,21 +92,46 @@ function renderScripts($scripts) {
     </div>
   </div>
 </nav>
-
+<?php if (isset($_SESSION['mensagem_erro'])): ?>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <?= $_SESSION['mensagem_erro']; ?>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <?php // Não faz unset aqui! ?>
+<?php endif; ?>
+<?php if (isset($_SESSION['mensagem_sucesso'])): ?>
+  <div class="alert alert-success"><?= $_SESSION['mensagem_sucesso']; unset($_SESSION['mensagem_sucesso']); ?></div>
+<?php endif; ?>
 <div class="container">
   <?php include $conteudo; ?>
 </div>
 
 <footer class="bg-light text-center p-3 mt-5 border-top">
-  <p class="mb-0">&copy; <?= date('Y') ?> - Sistema Financeiro | Isabel Cristina C. Gonçalves</p>
+  <p class="mb-0">&copy; <?= date('Y') ?> - Sistema Financeiro | Ricardo Nelson Gonçalves</p>
 </footer>
 
 <!-- Scripts base -->
+<!-- JQUERY -->
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+
+<!-- BOOTSTRAP JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- Scripts BODY adicionais -->
 <?php renderScripts($scriptsBody ?? []); ?>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const btn = document.getElementById('fechar-erro');
+  if(btn) {
+    btn.addEventListener('click', function() {
+      fetch('limpar_erro.php').then(() => {
+        document.getElementById('mensagem-erro').style.display = 'none';
+      });
+    });
+  }
+});
+</script>
 </body>
 </html>

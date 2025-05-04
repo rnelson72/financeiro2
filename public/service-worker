@@ -1,0 +1,19 @@
+self.addEventListener('install', (e) => {
+  e.waitUntil(
+    caches.open('app-cache').then((cache) => {
+      return cache.addAll([
+        '/',
+        '/public/assets/css/style.css',
+        '/public/assets/css/bootstrap.min.css',
+        '/public/assets/icons/icon-192.png',
+        '/public/assets/icons/icon-512.png'
+      ]);
+    })
+  );
+});
+
+self.addEventListener('fetch', (e) => {
+  e.respondWith(
+    caches.match(e.request).then((response) => response || fetch(e.request))
+  );
+});

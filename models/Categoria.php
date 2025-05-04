@@ -6,8 +6,12 @@ class Categoria {
         $this->pdo = $pdo;
     }
 
-    public function listarTodos() {
-        $stmt = $this->pdo->query("SELECT * FROM categoria ORDER BY conta");
+    public function listarTodos($filtro = '') {
+        if (empty($filtro)) {
+            $stmt = $this->pdo->query("SELECT * FROM categoria ORDER BY conta");
+        } else {
+            $stmt = $this->pdo->query("SELECT * FROM categoria WHERE {$filtro} ORDER BY conta");
+        }
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 

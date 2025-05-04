@@ -1,11 +1,11 @@
 <?php
 // link de volta para a listagem com contexto preservado
-$linkVoltar = '?' . http_build_query(array_merge(['path' => 'movimentacao'], capturar_contexto_para_url()));
+$linkVoltar = '?path=movimentacao&' . $contextoUrl;
 ?>
 
 <h2 class="mb-4"><?= $titulo ?></h2>
 
-<form method="POST" action="?path=movimentacao_salvar&<?= http_build_query(capturar_contexto_para_url()) ?>" class="row g-3">
+<form method="POST" action="?path=movimentacao_salvar&<?= $contextoUrl ?>" class="row g-3">
 
     <input type="hidden" name="id" value="<?= $registro['id'] ?? '' ?>">
 
@@ -40,12 +40,12 @@ $linkVoltar = '?' . http_build_query(array_merge(['path' => 'movimentacao'], cap
     </div>
 
     <div class="col-md-3">
-        <label for="conta_id" class="form-label">Conta</label>
-        <select name="conta_id" id="conta_id" class="form-select">
+        <label for="banco_id" class="form-label">Conta</label>
+        <select name="banco_id" id="banco_id" class="form-select">
             <option value="">Selecione...</option>
-            <?php foreach ($contas as $conta): ?>
-                <option value="<?= $conta['id'] ?>" <?= ($registro['conta_id'] ?? '') == $conta['id'] ? 'selected' : '' ?>>
-                    <?= htmlspecialchars($conta['descricao']) ?>
+            <?php foreach ($bancos as $bb): ?>
+                <option value="<?= $bb['id'] ?>" <?= ($registro['banco_id'] ?? '') == $bb['id'] ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($bb['descricao']) ?>
                 </option>
             <?php endforeach; ?>
         </select>

@@ -7,11 +7,7 @@
         <tr>
             <th>ID</th>
             <th>Descrição</th>
-            <th>Bandeira</th>
             <th>Venc.</th>
-            <th>Fech.</th>
-            <th>Limite</th>
-            <th>Banco</th>
             <th>Ações</th>
         </tr>
     </thead>
@@ -20,15 +16,11 @@
         <tr>
             <td><?= $item['id'] ?></td>
             <td><?= htmlspecialchars($item['descricao']) ?></td>
-            <td><?= $item['bandeira'] ?></td>
             <td><?= $item['dia_vencimento'] ?></td>
-            <td><?= $item['dia_fechamento'] ?></td>
-            <td><?= number_format($item['linha_credito'], 2, ',', '.') ?></td>
-            <td><?= htmlspecialchars($item['banco_nome'] ?? '-') ?></td>
             <td>
                 <a href='?path=cartao_editar&id=<?= $item['id'] ?>' class='btn btn-sm btn-outline-primary' title='Editar'><i class="bi bi-pencil-square"></i></a>
                 <a href='?path=cartao_excluir&id=<?= $item['id'] ?>' class='btn btn-sm btn-outline-danger' title='Excluir' onclick='return confirm("Confirma exclusão?")'><i class="bi bi-trash"></i></a>
-                <a href='?path=final_cartao_lista&cartao_id=<?= $item['id'] ?>' class='btn btn-sm btn-outline-secondary' title='Finais'>
+                <a href='?path=final_cartao_listar&cartao_id=<?= $item['id'] ?>' class='btn btn-sm btn-outline-secondary' title='Finais'>
                     <i class="bi bi-credit-card"></i>
                 </a>
             </td>

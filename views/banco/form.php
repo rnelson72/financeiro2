@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title><?= isset($registro) ? 'Editar Banco' : 'Novo Banco' ?></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="container mt-4">
 
 <h2 class="mb-4"><?= isset($registro) ? 'Editar Banco' : 'Novo Banco' ?></h2>
 
@@ -20,6 +12,11 @@
     <div class="mb-3">
         <label class="form-label">Número:</label>
         <input type="text" name="numero" class="form-control" value="<?= $registro['numero'] ?? '' ?>">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Agência:</label>
+        <input type="text" name="agencia" class="form-control" value="<?= $registro['agencia'] ?? '' ?>">
     </div>
 
     <div class="mb-3">
@@ -46,6 +43,3 @@
     <a href="?path=banco" class="btn btn-secondary ms-2">Cancelar</a>
 </form>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>

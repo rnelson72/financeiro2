@@ -5,29 +5,21 @@
         <tr>
             <th>ID</th>
             <th>Descrição</th>
-            <th>Número</th>
-            <th>Conta</th>
-            <th>Titular</th>
             <th>PIX</th>
-            <th>Ativo</th>
             <th>Ações</th>
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($bancos as $item): ?>
+        <?php foreach ($registros as $item): ?>
             <tr>
                 <td><?= $item['id'] ?></td>
                 <td><?= htmlspecialchars($item['descricao']) ?></td>
-                <td><?= htmlspecialchars($item['numero']) ?></td>
-                <td><?= htmlspecialchars($item['conta']) ?></td>
-                <td><?= htmlspecialchars($item['titular']) ?></td>
-                <td><?= htmlspecialchars($item['pix']) ?></td>
-                <td><?= $item['ativo'] ? 'Sim' : 'Não' ?></td>
+                <td><?= htmlspecialchars($item['pix'] ?? '') ?></td>
                 <td>
                     <a href='?path=banco_editar&id=<?= $item['id'] ?>' class='btn btn-sm btn-outline-primary' title='Editar'>
                         <i class="bi bi-pencil-square"></i>
                     </a>
-                    <a href='?path=banco_excluir&id=<?= $item['id'] ?>' class='btn btn-sm btn-outline-danger' title='Excluir' onclick='return confirm("Confirma exclusão?")'>
+                    <a href='?path=banco_excluir&id=<?= $item['id'] ?>' class='btn btn-sm btn-outline-danger' title='Excluir' >
                         <i class="bi bi-trash"></i>
                     </a>
                 </td>

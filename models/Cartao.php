@@ -10,7 +10,7 @@ class Cartao {
         $stmt = $this->pdo->query("
             SELECT c.*, b.descricao AS banco_nome
             FROM cartao c
-            LEFT JOIN bancos b ON c.banco_id = b.id
+            LEFT JOIN banco b ON c.banco_id = b.id
             ORDER BY c.descricao
         ");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

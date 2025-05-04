@@ -1,64 +1,81 @@
 <?php
-// Utilitários
 function link_contextual($paramsExtra = []) {
     $base = array_merge($_GET, $paramsExtra);
     return '?' . http_build_query($base);
 }
-
 function destaque_valor($valor) {
     return $valor < 0
         ? '<span style="color:red">R$ ' . number_format($valor, 2, ',', '.') . '</span>'
         : 'R$ ' . number_format($valor, 2, ',', '.');
 }
-?>
 
+// Para montar o value do input type=month corretamente
+$mes_ano_value = '';
+if (!empty($contexto['filtros']['ano']) && !empty($contexto['filtros']['mes'])) {
+    $mes_ano_value = $contexto['filtros']['ano'] . '-' . str_pad($contexto['filtros']['mes'], 2, '0', STR_PAD_LEFT);
+}
+?>
 <h2 class="mb-4">Movimentações Financeiras</h2>
 
-<!-- Filtros -->
-<form method="GET" class="row g-2 mb-3">
-    <input type="hidden" name="path" value="movimentacao">
 
-    <div class="col-md-3">
-        <input type="text" name="busca" value="<?= htmlspecialchars($contexto['busca']) ?>" class="form-control" placeholder="Buscar por descrição">
-    </div>
-    <div class="col-md-2">
-        <select name="mes" class="form-select">
-            <?php for ($m = 1; $m <= 12; $m++): ?>
-                <option value="<?= str_pad($m, 2, '0', STR_PAD_LEFT) ?>" <?= ($contexto['filtros']['mes'] == str_pad($m, 2, '0', STR_PAD_LEFT)) ? 'selected' : '' ?>>
-                    <?= str_pad($m, 2, '0', STR_PAD_LEFT) ?>
-                </option>
-            <?php endfor; ?>
-        </select>
-    </div>
-    <div class="col-md-2">
-        <select name="ano" class="form-select">
-            <?php for ($a = date('Y'); $a >= 2020; $a--): ?>
-                <option value="<?= $a ?>" <?= ($contexto['filtros']['ano'] == $a) ? 'selected' : '' ?>><?= $a ?></option>
-            <?php endfor; ?>
-        </select>
-    </div>
-    <div class="col-md-3">
-        <select name="conta_id" id="conta_id" class="form-select">
-            <option value="">Selecione o Banco</option>
-            <?php foreach ($contas as $conta): ?>
-                <option value="<?= $conta['id'] ?>" <?= $contexto['filtros']['conta_id'] == $conta['id'] ? 'selected' : '' ?>>
-                    <?= htmlspecialchars($conta['descricao']) ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-    <div class="col-md-2">
-        <button class="btn btn-primary w-100">Filtrar</button>
-    </div>
-</form>
 
-<!-- Botão Novo -->
-<div class="mb-3">
-    <a href="<?= link_contextual(['path' => 'movimentacao_nova']) ?>" class="btn btn-success">+ Nova Movimentação</a>
+<div class="row align-items-end mb-3 g-2">
+    <!-- Botão Novo -->
+    <div class="col-12 col-md-2 order-1 order-md-2">
+        <a href="?path=movimentacao_nova" class="btn btn-success w-100">+ Nova Movimentação</a>
+    </div>
+    <!-- Filtros -->
+    <div class="col-12 col-md-10 order-2 order-md-1">
+        <form method="GET" class="row g-2">
+            <input type="hidden" name="path" value="movimentacao">
+            <input type="hidden" name="carregado" value="1">
+            <div class="col-lg-3 col-sm-6">
+                <input type="text" name="busca"
+                       value="<?= htmlspecialchars($contexto['busca']) ?>"
+                       class="form-control" placeholder="Buscar por descrição">
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <?php
+                $mes_ano_value = '';
+                if (!empty($contexto['filtros']['ano']) && !empty($contexto['filtros']['mes'])) {
+                    $mes_ano_value = $contexto['filtros']['ano'] . '-' . str_pad($contexto['filtros']['mes'], 2, '0', STR_PAD_LEFT);
+                }
+                // Se um dos dois for vazio (após limpar), o value vai vazio mesmo!
+                ?>
+                <input type="month" name="mes_ano"
+                       value="<?= htmlspecialchars($mes_ano_value) ?>"
+                       class="form-control">
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <select name="banco_id" class="form-select">
+                    <option value="">Selecione o Banco</option>
+                    <?php foreach ($bancos as $bb): ?>
+                        <option value="<?= $bb['id'] ?>" <?= $contexto['filtros']['banco_id'] == $bb['id'] ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($bb['descricao']) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="col-lg-2 col-sm-6">
+                <input type="number" name="qtde_linhas"
+                       value="<?= htmlspecialchars($contexto['qtde_linhas']) ?>"
+                       class="form-control" min="5" max="100" placeholder="Qtd linhas"
+                       title="Linhas por página">
+            </div>
+            <div class="col-lg-1 col-12 d-flex gap-1">
+                <button class="btn btn-primary w-100" type="submit">Filtrar</button>
+                <a href="?path=movimentacao&limpar=1" class="btn btn-secondary w-100">Limpar</a>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Contador de resultados -->
+<div class="small mb-2 text-end text-muted">
+    Exibindo <strong><?= count($movimentacoes) ?></strong> de <strong><?= $total_registros ?></strong>
 </div>
 
 <!-- Tabela -->
-<table class="table table-bordered table-hover">
+<table class="table table-bordered datatable table-hover">
     <thead>
         <tr>
             <?php
@@ -67,7 +84,7 @@ function destaque_valor($valor) {
                 'data' => 'Data',
                 'descricao' => 'Descrição',
                 'valor' => 'Valor',
-                'conta_id' => 'Conta',
+                'banco_id' => 'Banco',
                 'categoria_id' => 'Categoria',
                 'codigo_pagamento' => 'Cód Pagto'
             ];
@@ -81,7 +98,9 @@ function destaque_valor($valor) {
                     'ordem_direcao' => $nova_direcao
                 ]);
             ?>
-                <th><a href="<?= $link ?>" class="text-decoration-none"><?= $titulo ?> <?= $icone ?></a></th>
+                <th>
+                    <a href="<?= $link ?>" class="text-decoration-none"><?= $titulo ?> <?= $icone ?></a>
+                </th>
             <?php endforeach; ?>
             <th>Ações</th>
         </tr>
@@ -97,7 +116,7 @@ function destaque_valor($valor) {
                 <td><?= date('d/m/Y', strtotime($mov['data'])) ?></td>
                 <td><?= htmlspecialchars($mov['descricao']) ?></td>
                 <td class="text-end"><?= destaque_valor($mov['valor']) ?></td>
-                <td><?= htmlspecialchars($mov['conta_nome'] ?? '-') ?></td>
+                <td><?= htmlspecialchars($mov['banco_nome'] ?? '-') ?></td>
                 <td><?= htmlspecialchars($mov['categoria_nome'] ?? '-') ?></td>
                 <td><?= $mov['codigo_pagamento'] ?></td>
                 <td>
@@ -118,7 +137,7 @@ function destaque_valor($valor) {
 
 <!-- Paginação -->
 <?php
-$total_paginas = ceil($total_registros / $contexto['qtde_linhas']);
+$total_paginas = max(1, ceil($total_registros / $contexto['qtde_linhas']));
 $pagina_atual = $contexto['pagina'];
 ?>
 <nav>
