@@ -1,23 +1,15 @@
 {
   "name": "PHP + MySQL",
   "build": {
-    "dockerfile": "Dockerfile" // Certifique-se que o Dockerfile está corrigido como na resposta anterior
+    "dockerfile": "Dockerfile"
   },
   "forwardPorts": [80, 3306],
-
-  // postCreateCommand: Executa APENAS UMA VEZ na criação/rebuild.
-  // Ideal para inicializar o banco de dados e rodar o script SQL inicial.
-  "postCreateCommand": "sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql && sudo chown -R mysql:mysql /var/lib/mysql && sudo /usr/bin/mysqld_safe --user=mysql & sleep 10 && sudo mysql -u root < /tmp/init.sql",
-
-  // postStartCommand: Executa TODA VEZ que o container inicia/reconecta.
-  // Ideal para iniciar os serviços principais.
-  "postStartCommand": "sudo service mysql start && sudo service apache2 start",
-
+  "postStartCommand": "bash /.devcontainer/ajustar_ambiente.sh",
   "customizations": {
     "vscode": {
       "extensions": [
-        "felixfbecker.php-debug",
-        "bmewburn.vscode-intelephense-client"
+        "bmewburn.vscode-intelephense-client",
+        "ms-azuretools.vscode-docker"
       ]
     }
   }

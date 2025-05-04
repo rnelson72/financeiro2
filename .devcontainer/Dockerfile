@@ -1,60 +1,30 @@
 FROM mcr.microsoft.com/devcontainers/base:ubuntu
 
-# Instala dependências básicas, PHP, Apache, MySQL, e ferramentas de build/dev para PECL
 RUN apt-get update && apt-get install -y --no-install-recommends \
-  # Essenciais
   apt-utils \
   gnupg \
-  # Servidores e PHP
   php \
   php-cli \
   php-mysql \
   php8.1-pgsql \
-  postgresql-cliente \
-  # Necessário para PECL e compilar extensões:
+  postgresql-client \
   php-dev \
   php-pear \
   apache2 \
   mysql-server \
-  # Ferramentas de build (Necessário para compilar PECL):
   build-essential \
-  # Limpeza
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
-# Agora que PHP e php-dev estão instalados, instala o Xdebug via PECL
-RUN pecl install xdebug
-
-# Cria manualmente o arquivo de configuração para habilitar Xdebug
-# Substitui o 'docker-php-ext-enable' que pode não funcionar aqui
-RUN echo "zend_extension=$(find /usr/lib/php -name xdebug.so)" > /etc/php/$(php -r 'echo PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')/mods-available/xdebug.ini && \
-    echo "xdebug.mode=debug" >> /etc/php/$(php -r 'echo PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')/mods-available/xdebug.ini && \
-    echo "xdebug.start_with_request=trigger" >> /etc/php/$(php -r 'echo PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')/mods-available/xdebug.ini && \
-    echo "xdebug.client_port=9003" >> /etc/php/$(php -r 'echo PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')/mods-available/xdebug.ini && \
-    echo "xdebug.client_host=host.docker.internal" >> /etc/php/$(php -r 'echo PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')/mods-available/xdebug.ini && \
-    # (Opcional) Log do Xdebug - Crie o diretório se for usar
-    # echo "xdebug.log=/tmp/xdebug/xdebug.log" >> /etc/php/$(php -r 'echo PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')/mods-available/xdebug.ini && \
-    # Habilita a configuração para Apache e CLI
-    ln -s /etc/php/$(php -r 'echo PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')/mods-available/xdebug.ini /etc/php/$(php -r 'echo PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')/apache2/conf.d/20-xdebug.ini && \
-    ln -s /etc/php/$(php -r 'echo PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')/mods-available/xdebug.ini /etc/php/$(php -r 'echo PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')/cli/conf.d/20-xdebug.ini
-
-# Ativa o mod_rewrite do Apache
+COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 RUN a2enmod rewrite
 
-# Ajusta diretório raiz do Apache
-# RUN rm -rf /var/www/html && ln -s /workspaces/$(basename $PWD)/public /var/www/html
-# Remove o diretório/link html antigo e cria o link simbólico CORRETO
-RUN rm -rf /var/www/html && ln -s /workspaces/financeiro2/public /var/www/html
-
-# Garante permissões corretas para o socket do MySQL
+# Permissões do MySQL
 RUN mkdir -p /var/run/mysqld && \
     chown -R mysql:mysql /var/run/mysqld && \
     chmod 755 /var/run/mysqld
 
-# Copia script de inicialização
 COPY init.sql /tmp/init.sql
 
-# Aplica o script com MySQL iniciado
-RUN service mysql start && \
-    sleep 5 && \
-    mysql -u root < /tmp/init.sql
+COPY ajustar_ambiente.sh /.devcontainer/ajustar_ambiente.sh
+RUN chmod +x /.devcontainer/ajustar_ambiente.sh
