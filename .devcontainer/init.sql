@@ -9,6 +9,7 @@ USE meu_banco;
 
 -- MySQL dump 10.13  Distrib 8.0.41, for Linux (x86_64)
 --
+-- Host: localhost    Database: meu_banco
 -- ------------------------------------------------------
 -- Server version	8.0.41-0ubuntu0.22.04.1
 
@@ -44,6 +45,15 @@ CREATE TABLE `banco` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `banco`
+--
+
+LOCK TABLES `banco` WRITE;
+/*!40000 ALTER TABLE `banco` DISABLE KEYS */;
+/*!40000 ALTER TABLE `banco` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `cartao`
 --
 
@@ -65,6 +75,14 @@ CREATE TABLE `cartao` (
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `cartao`
+--
+
+LOCK TABLES `cartao` WRITE;
+/*!40000 ALTER TABLE `cartao` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cartao` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `categoria`
@@ -83,6 +101,14 @@ CREATE TABLE `categoria` (
 ) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `categoria`
+--
+
+LOCK TABLES `categoria` WRITE;
+/*!40000 ALTER TABLE `categoria` DISABLE KEYS */;
+/*!40000 ALTER TABLE `categoria` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `compras`
@@ -96,7 +122,7 @@ CREATE TABLE `compras` (
   `cartao_id` int NOT NULL,
   `final_cartao_id` int DEFAULT NULL,
   `data` date NOT NULL,
-  `descricao` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `descricao` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
   `valor` decimal(12,2) NOT NULL,
   `parcelas` int DEFAULT '1',
   `parcela_atual` int DEFAULT '1',
@@ -114,6 +140,14 @@ CREATE TABLE `compras` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2769 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `compras`
+--
+
+LOCK TABLES `compras` WRITE;
+/*!40000 ALTER TABLE `compras` DISABLE KEYS */;
+/*!40000 ALTER TABLE `compras` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `controle`
@@ -134,6 +168,15 @@ CREATE TABLE `controle` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `controle`
+--
+
+LOCK TABLES `controle` WRITE;
+/*!40000 ALTER TABLE `controle` DISABLE KEYS */;
+/*!40000 ALTER TABLE `controle` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `fatura`
 --
 
@@ -147,7 +190,7 @@ CREATE TABLE `fatura` (
   `data_vencimento` date NOT NULL,
   `valor_total` decimal(12,2) DEFAULT NULL,
   `valor_pago` decimal(12,2) DEFAULT NULL,
-  `status` varchar(10) COLLATE utf8mb3_unicode_ci DEFAULT 'aberta',
+  `status` varchar(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT 'aberta',
   `movimentacao_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `cartao_id` (`cartao_id`),
@@ -157,6 +200,14 @@ CREATE TABLE `fatura` (
 ) ENGINE=InnoDB AUTO_INCREMENT=170 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `fatura`
+--
+
+LOCK TABLES `fatura` WRITE;
+/*!40000 ALTER TABLE `fatura` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fatura` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `final_cartao`
@@ -178,6 +229,14 @@ CREATE TABLE `final_cartao` (
 ) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `final_cartao`
+--
+
+LOCK TABLES `final_cartao` WRITE;
+/*!40000 ALTER TABLE `final_cartao` DISABLE KEYS */;
+/*!40000 ALTER TABLE `final_cartao` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `grupo_controle`
@@ -194,6 +253,14 @@ CREATE TABLE `grupo_controle` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `grupo_controle`
+--
+
+LOCK TABLES `grupo_controle` WRITE;
+/*!40000 ALTER TABLE `grupo_controle` DISABLE KEYS */;
+/*!40000 ALTER TABLE `grupo_controle` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `grupos_menu`
@@ -212,6 +279,15 @@ CREATE TABLE `grupos_menu` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `grupos_menu`
+--
+
+LOCK TABLES `grupos_menu` WRITE;
+/*!40000 ALTER TABLE `grupos_menu` DISABLE KEYS */;
+INSERT INTO `grupos_menu` VALUES (1,'Cadastros','bi bi-archive',1,1),(2,'Financeiro','bi bi-cash-coin',2,1),(3,'Administração','bi bi-gear',4,1),(4,'Relatórios','',3,1);
+/*!40000 ALTER TABLE `grupos_menu` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `lancamentos`
@@ -232,6 +308,14 @@ CREATE TABLE `lancamentos` (
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `lancamentos`
+--
+
+LOCK TABLES `lancamentos` WRITE;
+/*!40000 ALTER TABLE `lancamentos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `lancamentos` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `movimentacao`
@@ -243,7 +327,7 @@ DROP TABLE IF EXISTS `movimentacao`;
 CREATE TABLE `movimentacao` (
   `id` int NOT NULL,
   `data` date NOT NULL,
-  `descricao` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `descricao` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   `valor` decimal(12,2) NOT NULL,
   `categoria_id` int NOT NULL,
   `banco_id` int NOT NULL,
@@ -257,6 +341,14 @@ CREATE TABLE `movimentacao` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `movimentacao`
+--
+
+LOCK TABLES `movimentacao` WRITE;
+/*!40000 ALTER TABLE `movimentacao` DISABLE KEYS */;
+/*!40000 ALTER TABLE `movimentacao` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `permissoes`
@@ -283,7 +375,7 @@ CREATE TABLE `permissoes` (
 
 LOCK TABLES `permissoes` WRITE;
 /*!40000 ALTER TABLE `permissoes` DISABLE KEYS */;
-INSERT INTO `permissoes` VALUES (110,1,1),(111,1,2),(112,1,3),(113,1,4),(114,1,5),(115,1,6),(116,1,7),(117,1,8),(118,1,9),(119,1,10),(120,1,11),(121,1,12),(122,1,13),(123,1,14),(124,1,15),(125,1,16),(126,1,17),(127,1,18),(128,1,19),(129,1,20),(130,1,21),(131,1,22),(132,1,23),(133,1,24),(134,1,25),(135,1,26),(136,1,27),(137,1,28),(138,1,29),(139,1,30),(140,1,31),(164,1,32),(160,1,33),(161,1,34),(162,1,35),(163,1,36),(142,1,37),(143,1,38),(144,1,39),(145,1,40),(146,1,41),(147,1,42),(148,1,43),(149,1,44),(150,1,45),(151,1,46),(152,1,47),(153,1,48),(154,1,49),(155,1,50),(156,1,51),(157,1,52),(158,1,53),(159,1,54),(165,1,55),(166,1,56),(167,1,57),(168,1,58),(169,1,59),(170,1,60),(171,1,61),(172,1,62),(173,1,63),(174,1,64),(175,1,65),(176,1,68),(177,1,69),(178,1,70),(179,1,71),(180,1,72),(181,1,73),(182,1,74),(183,1,75),(184,1,76),(185,1,77),(186,1,78),(187,1,79),(141,1,80),(1,1,81),(2,1,82),(3,1,83),(188,1,84),(190,1,85),(107,2,37),(106,2,80),(108,3,1),(109,3,2);
+INSERT INTO `permissoes` VALUES (110,1,1),(111,1,2),(112,1,3),(113,1,4),(114,1,5),(115,1,6),(116,1,7),(117,1,8),(118,1,9),(119,1,10),(120,1,11),(121,1,12),(122,1,13),(123,1,14),(124,1,15),(125,1,16),(126,1,17),(127,1,18),(128,1,19),(129,1,20),(130,1,21),(131,1,22),(132,1,23),(133,1,24),(134,1,25),(135,1,26),(136,1,27),(137,1,28),(138,1,29),(139,1,30),(140,1,31),(164,1,32),(160,1,33),(161,1,34),(162,1,35),(163,1,36),(142,1,37),(143,1,38),(144,1,39),(145,1,40),(146,1,41),(147,1,42),(148,1,43),(149,1,44),(150,1,45),(151,1,46),(152,1,47),(153,1,48),(154,1,49),(155,1,50),(156,1,51),(157,1,52),(158,1,53),(159,1,54),(165,1,55),(166,1,56),(167,1,57),(168,1,58),(169,1,59),(170,1,60),(171,1,61),(172,1,62),(173,1,63),(174,1,64),(175,1,65),(176,1,68),(177,1,69),(178,1,70),(179,1,71),(180,1,72),(181,1,73),(182,1,74),(183,1,75),(184,1,76),(185,1,77),(186,1,78),(187,1,79),(141,1,80),(1,1,81),(2,1,82),(3,1,83),(188,1,84),(190,1,85);
 /*!40000 ALTER TABLE `permissoes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -348,7 +440,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'Ricardo Nelson','sup.ricardo@gmail.com','$2y$10$9arbOi/Ds2SLTA4zoygyiu3x8q32w8n2Ozq5wT2Catlmb8h7my8HO','2025-03-25 14:09:40'),(2,'Izabel Cristina','makitubbb@gmail.com','$2y$10$91lW/5t2d8Xj8OXDjJeXge/m84mwU6Kngdb1kIB.9O/HERuG0gVgK','2025-03-28 02:08:21'),(3,'Pablinny Thauanny','pablinnythauanny97@gmail.com','scrypt:32768:8:1$oOfEZsgGbv9GVNyd$b98f2581c8b9200ccc90dcf5a97d36cb1eb3f773b2024ed6adc8f03f36cdb469205a5bfc459518e0dec812bcd4dea73140088052ae2ab3d8fb0e4bed08603320','2025-03-28 02:26:59'),(4,'Teste do Manoel','ricardongoncalves@yahoo.com.br','$2y$10$/F72QHrRsyg6uxV.EIvZWOXDycALQT9OWxQ5rTtNIyRYMiy94GbVW','2025-04-26 16:37:31');
+INSERT INTO `usuarios` VALUES (1,'Admin','sup.ricardo@gmail.com','$2y$10$adsvv/RDnBwWMxZER7oLa.IVcP7xFf1tVW1iqHfYtUA47fS3eyjuC','2025-03-25 14:09:40');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -485,4 +577,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-03 20:45:50
+-- Dump completed on 2025-05-04 18:47:31
